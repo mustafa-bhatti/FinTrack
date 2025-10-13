@@ -1,0 +1,47 @@
+{
+  "name": "Ghulam Mustafa",
+  "wallet": 5000,
+  "bank": 2000,
+  "expenses": 3500,
+  "income": 5000,
+  "currency": "PKR",
+
+  "transactions": [
+    {
+      "id": 1,
+      "type": "income",
+      "amount": 2000,
+      "category": "Salary",
+      "source": "Bank",
+      "date": "2024-10-01",
+      "description": "October Salary"
+    },
+    {
+      "id": 2,
+      "type": "expense",
+      "amount": 1500,
+      "category": "Groceries",
+      "source": "Wallet",
+      "date": "2024-10-02",
+      "description": "Weekly groceries"
+    },
+    {
+      "id": 3,
+      "type": "expense",
+      "amount": 500,
+      "category": "Transport",
+      "source": "Wallet",
+      "date": "2024-10-03",
+      "description": "Monthly bus pass"
+    },
+    {
+      "id": 4,
+      "type": "expense",
+      "amount": 1500,
+      "category": "Rent",
+      "source": "Bank",
+      "date": "2024-10-04",
+      "description": "Monthly Rent"
+    }
+  ]
+}
