@@ -1,14 +1,17 @@
-import React from 'react';
-import userData from './data/user1.json';
-
+import React, { useContext } from 'react';
+import Summary from './Summary';
+import { DataContext } from '../context/data';
+import '../styles/dashboard.css';
 function Dashboard() {
+  const { user } = useContext(DataContext);
+  //   console.log(user);
   return (
-    <div className="app grid grid-cols-5 grid-rows-5">
-      <div className="col-span-full bg-gray-700 text-white p-6 text-center font-bold text-2xl">
+    <div className="dashboard">
+      <div className="navbar">
         <h1>Fin Track</h1>
-        <p>Welcome, {userData.name}!</p>
-        <Summary />
+        <p>Welcome, {user.name}!</p>
       </div>
+      <Summary income={user.income} expenses={user.expenses} />
     </div>
   );
 }
