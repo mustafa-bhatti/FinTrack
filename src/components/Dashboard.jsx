@@ -6,13 +6,15 @@ function Dashboard() {
   const { user } = useContext(DataContext);
   //   console.log(user);
   return (
-    <div className="dashboard">
+    <>
       <div className="navbar">
         <h1>Fin Track</h1>
         <p>Welcome, {user.name}!</p>
       </div>
-      <Summary income={user.income} expenses={user.expenses} />
+    <div className="dashboard">
+      <Summary />
     </div>
+    </>
   );
 }
 
