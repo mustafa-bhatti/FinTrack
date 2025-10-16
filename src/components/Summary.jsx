@@ -8,7 +8,7 @@ import React, { useContext } from 'react';
 export default function Summary() {
   const { user } = useContext(DataContext);
   let income = user.income;
-  let expenses = user.expenses;
+  // let expenses = user.expenses;
   let balance = user.balance;
   return (
     <>
