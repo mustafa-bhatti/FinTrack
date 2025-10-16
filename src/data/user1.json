@@ -2,6 +2,7 @@
   "name": "Ghulam Mustafa",
   "wallet": 5000,
   "bank": 2000,
+  "balance":7000,
   "expenses": 3500,
   "income": 5000,
   "currency": "PKR",
