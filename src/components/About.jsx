@@ -20,8 +20,7 @@ function About() {
           </p>
         </div>
         <div>
-          <video src="/public/about-video.mp4"></video>
-        </div>
+zx        </div>
       </div>
     </div>
   );
