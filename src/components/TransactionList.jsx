@@ -6,7 +6,7 @@ export function TransactionList() {
   const { user} = useContext(DataContext);
 
   return (
-      <div className="flex flex-col gap-0.5 col-span-1 w-full p-2">
+      <div className="flex flex-col gap-3 col-span-1 w-full p-2">
         <h1 className='font-bold'>Transactions</h1>
         {user.transactions.map((transaction, index) => (
           <TransactionItem
@@ -15,6 +15,7 @@ export function TransactionList() {
             source={transaction.source}
             value={transaction.amount}
             date={transaction.date}
+            type={transaction.type}
           />
         ))}
       </div>
