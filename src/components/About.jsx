@@ -4,7 +4,7 @@ function About() {
   return (
     <div
       id="about"
-      className="flex flex-col text-center flex flex-col align-center justify-center pt-[90px] pb-[90px]"
+      className="flex flex-col text-center align-center justify-center pt-[90px] pb-[90px]"
     >
       <h2 className="text-center text-3xl mb-[20px] font-semibold">About Us</h2>
       <div className="flex align-center justify-center">
@@ -20,7 +20,7 @@ function About() {
           </p>
         </div>
         <div>
-          <img src="" alt="aboutImg" />
+          <video src="/public/about-video.mp4"></video>
         </div>
       </div>
     </div>
