@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import Summary from './Summary';
 import { DataContext } from '../context/data';
 import '../styles/dashboard.css';
+import { TransactionList } from './transactionList';
 function Dashboard() {
   const { user } = useContext(DataContext);
   //   console.log(user);
@@ -13,6 +14,7 @@ function Dashboard() {
       </div>
     <div className="dashboard">
       <Summary />
+      <TransactionList/>
     </div>
     </>
   );
