@@ -3,15 +3,13 @@ import Summary from './Summary';
 import { DataContext } from '../context/data';
 import '../styles/dashboard.css';
 import { TransactionList } from './transactionList';
+import NavbarDashboard from './NavbarDashboard';
 function Dashboard() {
   const { user } = useContext(DataContext);
   //   console.log(user);
   return (
     <>
-      <div className="navbar">
-        <h1>Fin Track</h1>
-        <p>Welcome, {user.name}!</p>
-      </div>
+      <NavbarDashboard />
     <div className="dashboard">
       <Summary />
       <TransactionList/>
