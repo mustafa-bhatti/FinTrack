@@ -19,7 +19,7 @@ export default function Summary() {
               <MdAttachMoney fontSize="1.5em" color="white" />
             </div>
             <p>Current Balance</p>
-            <p className="text-green-900 font-bold"> $ {balance}</p>
+            <p className="text-green-900 font-bold"> {user.currency} {balance}</p>
           </div>
         </div>
         <div className="components">
@@ -28,7 +28,7 @@ export default function Summary() {
               <FaMoneyBillAlt fontSize="1.5em" color="white" />
             </div>
             <p>Income</p>
-            <p className="text-green-900 font-bold">$ {income}</p>
+            <p className="text-green-900 font-bold">{user.currency}  {income}</p>
           </div>
         </div>
         {/* expenses */}
@@ -38,7 +38,7 @@ export default function Summary() {
               <GiReceiveMoney fontSize="1.5em" color="white" />
             </div>
             <p>Expenses</p>
-            <p className="text-red-700 font-bold"> $ {income}</p>
+            <p className="text-red-700 font-bold"> {user.currency} {income}</p>
           </div>
         </div>
       </div>
