@@ -12,7 +12,7 @@ export default function Summary() {
   let balance = user.balance;
   return (
     <>
-      <div className='flex col-span-4 justify-between'>
+      <div className='summary-container'>
         <div className="components">
           <div className="flex flex-col justify-center items-center gap-2 p-2 ">
             <div className="icon bg-green-600">

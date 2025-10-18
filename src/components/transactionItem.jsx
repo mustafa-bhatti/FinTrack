@@ -38,7 +38,7 @@ export default function TransactionItem({
   const Icon = icons[category] || fallback;
 
   return (
-    <div className="flex justify-between items-center p-2 rounded-lg shadow-lg  hover:scale-105 transition duration-300 bg-white">
+    <div className="flex justify-between items-center p-2 rounded-lg shadow-lg  hover:scale-103 transition duration-300 bg-white">
       <div className="flex gap-3 p-4 justify-center items-center">
         <img src={Icon} alt={category} className=""></img>
         <div className="font-semibold text-[14px]">

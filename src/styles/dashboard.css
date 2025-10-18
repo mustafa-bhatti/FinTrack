@@ -1,16 +1,13 @@
-/* Dashboard Container */
-.dashboard-container {
-  min-height: 100vh;
+.dashboard {
   display: flex;
   flex-direction: column;
-  background-color: #f0fdf4; /* Very light green background */
+  /* min-height: 100vh; */
+  background-color: #f0fdf4;
+  padding: 1rem 1.5rem;
+  width: 100%;
+  gap: 1rem;
 }
 
-.dashboard-layout {
-  display: flex;
-  flex: 1;
-  min-height: 0;
-}
 
 /* Sidebar Styles */
 .sidebar {
@@ -18,7 +15,7 @@
   color: white;
   transition: width 0.3s ease;
   min-height: 100%;
-  position: fixed;
+  position: relative;
   overflow-y: auto;
 }
 
@@ -37,7 +34,7 @@
 .sidebar-item {
   display: flex;
   align-items: center;
-  padding: 1rem 1.5rem;
+  padding: 1rem 1rem;
   margin: 0.25rem 0.5rem;
   border-radius: 12px;
   cursor: pointer;
@@ -113,18 +110,16 @@
 .components {
   background: white;
   border-radius: 16px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
   border: 1px solid #d1fae5;
   transition: all 0.3s ease;
   padding: 1.5rem;
   margin: 1rem 0;
+  flex: 1;
 }
 
 .components:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
   border-color: #a7f3d0;
 }
 
@@ -152,8 +147,6 @@
 /* Navbar Dashboard */
 .navbar-dashboard {
   background: white;
-  border-bottom: 2px solid #d1fae5;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   z-index: 20;
   position: relative;
 }
@@ -169,13 +162,20 @@
   background-color: #ecfdf5;
   color: #065f46;
 }
+/* summary */
+.summary-container{
+  display: flex;
+  /* justify-content: space-between; */
+  gap: 1rem;
+
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .sidebar-open {
     width: 100%;
     position: fixed;
-    top: 80px;
+    top: 64px;
     left: 0;
     bottom: 0;
     z-index: 50;
@@ -190,9 +190,19 @@
     margin-left: 0;
     width: 100%;
   }
+  .summary-container{
+    flex-direction: column;
+    gap: 0;
+  }
+  .components{
+    margin: 10px;
+    padding: 0.5rem;
+  }
+  
+
 }
 
 /* Smooth transitions for all elements */
-* {
+/* * {
   transition: margin-left 0.3s ease, width 0.3s ease;
-}
+} */

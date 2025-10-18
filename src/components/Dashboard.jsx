@@ -12,11 +12,17 @@ function Dashboard() {
 
   return (
     <>
-      <NavbarDashboard toggleSidebar={() => setShowSidebar(!showSidebar)} />
-      <div className="dashboard">
-        <Sidebar showSidebar={showSidebar} />
-        {/* <Summary /> */}
-        {/* <TransactionList/> */}
+      <div className='dashboard-container flex flex-col'>
+        <NavbarDashboard toggleSidebar={() => setShowSidebar(!showSidebar)} />
+
+        <div className='flex min-h-screen'>
+          <Sidebar showSidebar={showSidebar} />
+          <div className={`dashboard`}>
+            <Summary />
+            <TransactionList/>
+
+          </div>
+        </div>
       </div>
     </>
   );
