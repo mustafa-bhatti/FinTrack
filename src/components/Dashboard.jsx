@@ -8,7 +8,7 @@ import Sidebar from './Sidebar';
 
 function Dashboard() {
   const { user } = useContext(DataContext);
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   return (
     <>
@@ -17,9 +17,12 @@ function Dashboard() {
 
         <div className='flex min-h-screen'>
           <Sidebar showSidebar={showSidebar} />
-          <div className={`dashboard`}>
+          <div className="dashboard">
             <Summary />
+            <div className="divide">
             <TransactionList/>
+              <h1>Space</h1>
+            </div>
 
           </div>
         </div>
