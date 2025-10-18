@@ -84,29 +84,8 @@
   pointer-events: none;
 }
 
-/* Main Content */
-.main-content {
-  flex: 1;
-  transition: margin-left 0.3s ease;
-  background-color: #f0fdf4;
-  min-height: 100%;
-}
 
-.with-sidebar {
-  margin-left: 0;
-}
 
-.full-width {
-  margin-left: 0;
-}
-
-.content-wrapper {
-  padding: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-/* Update existing component styles */
 .components {
   background: white;
   border-radius: 16px;

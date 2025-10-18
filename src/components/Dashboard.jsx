@@ -19,9 +19,9 @@ function Dashboard() {
           <Sidebar showSidebar={showSidebar} />
           <div className="dashboard">
             <Summary />
-            <div className="divide">
+            <div className="divider flex flex-col flex-1 lg:flex-row gap-4">
             <TransactionList/>
-              <h1>Space</h1>
+              <h1 className='bg-amber-500 flex-2'>Space</h1>
             </div>
 
           </div>

@@ -38,18 +38,18 @@ export default function TransactionItem({
   const Icon = icons[category] || fallback;
 
   return (
-    <div className="transaction-item flex justify-between items-center p-2 rounded-lg shadow-lg  hover:scale-103 transition duration-300 bg-white">
+    <div className="transaction-item flex justify-between items-center p-2 rounded-lg shadow-lg  hover:scale-103 transition duration-300 bg-white ">
       <div className="flex gap-3 p-4 justify-center items-center">
         <img src={Icon} alt={category} className=""></img>
-        <div className="font-semibold text-[14px] ">
+        <div className="font-semibold text-[14px] lg:text-[16px]">
           <p>{category}</p>
           <p className='text-[12px] text-gray-700 font-medium'>{source}</p>
         </div>
       </div>
-      <div className="">
+      <div className="text-[13px] lg:text-[14px]">
         <div>
           <p className={`${type === 'income' ? 'text-green-500 bg-green-100 rounded-2xl p-1 text-center' : 'text-red-500 bg-red-100  rounded-2xl p-1 text-center'}`}>${type === 'income' ? value : -value}</p>
-          <p>{date}</p>
+          <p className='my-1'>{date}</p>
         </div>
       </div>
     </div>
