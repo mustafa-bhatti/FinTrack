@@ -1,19 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Summary from './Summary';
 import { DataContext } from '../context/data';
 import '../styles/dashboard.css';
 import { TransactionList } from './transactionList';
 import NavbarDashboard from './NavbarDashboard';
+import Sidebar from './Sidebar';
+
 function Dashboard() {
   const { user } = useContext(DataContext);
-  //   console.log(user);
+  const [showSidebar, setShowSidebar] = useState(true);
+
   return (
     <>
-      <NavbarDashboard />
-    <div className="dashboard">
-      <Summary />
-      <TransactionList/>
-    </div>
+      <NavbarDashboard toggleSidebar={() => setShowSidebar(!showSidebar)} />
+      <div className="dashboard">
+        <Sidebar showSidebar={showSidebar} />
+        {/* <Summary /> */}
+        {/* <TransactionList/> */}
+      </div>
     </>
   );
 }

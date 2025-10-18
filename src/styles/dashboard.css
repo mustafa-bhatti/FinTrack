@@ -1,38 +1,198 @@
-.dashboard {
-  display: grid;
+/* Dashboard Container */
+.dashboard-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0fdf4; /* Very light green background */
+}
 
-  grid-template-columns: repeat(3,1fr);
-  grid-template-rows: auto auto;
-  align-items: start;
-  justify-items: stretch;
+.dashboard-layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
 
-  gap: 1rem;
-  background-color: #f3f4f6; /* Tailwind's gray-100 */
+/* Sidebar Styles */
+.sidebar {
+  background: linear-gradient(180deg, #065f46 0%, #047857 50%, #059669 100%);
+  color: white;
+  transition: width 0.3s ease;
+  min-height: 100%;
+  position: fixed;
+  overflow-y: auto;
+}
+
+.sidebar-open {
+  width: 210px;
+}
+
+.sidebar-closed {
+  width: 80px;
+}
+
+.sidebar-nav {
+  padding: 1rem 0;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  margin: 0.25rem 0.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.sidebar-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(4px);
+}
+
+.sidebar-item.active {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.sidebar-item.logout {
+  margin-top: auto;
+  color: #fca5a5;
+}
+
+.sidebar-item.logout:hover {
+  background-color: rgba(220, 38, 38, 0.1);
+  color: #ef4444;
+}
+
+.sidebar-icon {
+  font-size: 1.5rem;
+  min-width: 24px;
+  margin-right: 1rem;
+}
+
+.sidebar-closed .sidebar-icon {
+  margin-right: 0;
+  justify-self: center;
+}
+
+.sidebar-label {
+  font-weight: 500;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  transition: margin-left 0.3s ease;
+  background-color: #f0fdf4;
+  min-height: 100%;
+}
+
+.with-sidebar {
+  margin-left: 0;
+}
+
+.full-width {
+  margin-left: 0;
+}
+
+.content-wrapper {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Update existing component styles */
+.components {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #d1fae5;
+  transition: all 0.3s ease;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+.components:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-color: #a7f3d0;
 }
 
 .icon {
   padding: 1em;
   border-radius: 50%;
-}
-
-.navbar {
-  background-color: #374151; /* Tailwind's gray-700 */
-  color: white;
-  padding: 1.5rem; 
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.5em; 
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
- 
 }
-.components {
-    justify-content: center;
-    align-items: center;
-  font-size: 1.2em;
-  margin: 1rem;
-  background-color: white;
-  box-shadow: 2px 5px 5px 2px rgba(0, 0, 0, 0.1);
+
+/* Green theme for icons */
+.icon.bg-green-600 {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.icon.bg-blue-600 {
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+}
+
+.icon.bg-yellow-600 {
+  background: linear-gradient(135deg, #ca8a04 0%, #a16207 100%);
+}
+
+/* Navbar Dashboard */
+.navbar-dashboard {
+  background: white;
+  border-bottom: 2px solid #d1fae5;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  z-index: 20;
+  position: relative;
+}
+
+.navbar-dashboard button {
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  color: #047857;
+}
+
+.navbar-dashboard button:hover {
+  background-color: #ecfdf5;
+  color: #065f46;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar-open {
+    width: 100%;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    bottom: 0;
+    z-index: 50;
+  }
+
+  .sidebar-closed {
+    width: 0;
+    overflow: hidden;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* Smooth transitions for all elements */
+* {
+  transition: margin-left 0.3s ease, width 0.3s ease;
 }
