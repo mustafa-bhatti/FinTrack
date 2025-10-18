@@ -12,11 +12,10 @@
   background: white;
   border-radius: 16px;
   border: 1px solid #d1fae5;
-  padding:2.5rem;
+  padding: 2.5rem;
   margin: 1rem 0;
   transition: all 0.3s ease;
   flex: 1;
-  ;
 }
 /* Sidebar Styles */
 .sidebar {
@@ -90,10 +89,7 @@
 
 .hidden {
   opacity: 0;
-  pointer-events: none;
 }
-
-
 
 .components {
   background: white;
@@ -151,25 +147,23 @@
   color: #065f46;
 }
 /* summary */
-.summary-container{
+.summary-container {
   display: flex;
   /* justify-content: space-between; */
   gap: 1rem;
-
 }
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
   .sidebar-open {
-    width: 100%; 
+    width: 100%;
     position: fixed;
     top: 64px;
     left: 0;
     bottom: 0;
-    z-index: 50;  
+    z-index: 50;
   }
- 
-  
+
   .sidebar-closed {
     width: 0;
     overflow: hidden;
@@ -179,16 +173,14 @@
     margin-left: 0;
     width: 100%;
   }
-  .summary-container{
+  .summary-container {
     flex-direction: column;
     gap: 0;
   }
-  .components{
+  .components {
     margin: 10px;
     padding: 0.5rem;
   }
-  
-
 }
 @media screen and (max-width: 480px) {
   .components {
@@ -196,12 +188,11 @@
     margin: 5px 0;
   }
   .transaction-item {
-  font-size: 12px;
+    font-size: 12px;
   }
-  .chart-container{
+  .chart-container {
     padding: 0.5rem;
     margin: 0;
-
   }
 }
 

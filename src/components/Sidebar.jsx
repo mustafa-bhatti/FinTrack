@@ -22,12 +22,6 @@ export default function Sidebar({ showSidebar }) {
     <div
       className={`sidebar ${showSidebar ? 'sidebar-open' : 'sidebar-closed'}`}
     >
-      {/* <div className="sidebar-header">
-        <h2 className={`sidebar-title ${!showSidebar && 'hidden'}`}>
-          FinTracker
-        </h2>
-      </div> */}
-
       <nav className="sidebar-nav">
         {menuItems.map((item, index) => {
           const IconComponent = item.icon;
@@ -38,7 +32,9 @@ export default function Sidebar({ showSidebar }) {
                 item.isLogout ? 'logout' : ''
               }`}
             >
-              <IconComponent className="sidebar-icon" />
+              <button name={item.label} aria-label={item.label}>
+                <IconComponent className="sidebar-icon"/>
+              </button>
               <span className={`sidebar-label ${!showSidebar && 'hidden'}`}>
                 {item.label}
               </span>
