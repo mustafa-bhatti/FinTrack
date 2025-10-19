@@ -8,6 +8,7 @@ import {
 } from 'react-icons/md';
 import { BiTransfer } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
+import TransanctionPage from './TransanctionPage';
 export default function Sidebar({ showSidebar }) {
   const menuItems = [
     { icon: MdDashboard, label: 'Dashboard', active: true },
@@ -33,8 +34,9 @@ export default function Sidebar({ showSidebar }) {
               }`}
             >
               <Link
+                key={index}
                 to={
-                  item.label != 'Dashboard'
+                  item.label !== 'Dashboard'
                     ? '/dashboard/' + item.label.toLowerCase()
                     : '/dashboard'
                 }
