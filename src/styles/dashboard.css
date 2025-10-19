@@ -36,13 +36,15 @@
 }
 
 .sidebar-nav {
+  display: flex;
+  flex-direction: column;
   padding: 1rem 0;
 }
 
 .sidebar-item {
   display: flex;
   align-items: center;
-  padding: 1rem 1rem;
+  padding: 1rem 0.5rem;
   margin: 0.25rem 0.5rem;
   border-radius: 12px;
   cursor: pointer;
@@ -74,6 +76,7 @@
   font-size: 1.5rem;
   min-width: 24px;
   margin-right: 1rem;
+  cursor: pointer;
 }
 
 .sidebar-closed .sidebar-icon {

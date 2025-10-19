@@ -7,7 +7,7 @@ import {
   MdSettings,
 } from 'react-icons/md';
 import { BiTransfer } from 'react-icons/bi';
-
+import { Link } from 'react-router-dom';
 export default function Sidebar({ showSidebar }) {
   const menuItems = [
     { icon: MdDashboard, label: 'Dashboard', active: true },
@@ -32,12 +32,20 @@ export default function Sidebar({ showSidebar }) {
                 item.isLogout ? 'logout' : ''
               }`}
             >
-              <button name={item.label} aria-label={item.label}>
-                <IconComponent className="sidebar-icon"/>
-              </button>
-              <span className={`sidebar-label ${!showSidebar && 'hidden'}`}>
-                {item.label}
-              </span>
+              <Link
+                to={
+                  item.label != 'Dashboard'
+                    ? '/dashboard/' + item.label.toLowerCase()
+                    : '/dashboard'
+                }
+              >
+                <button name={item.label} aria-label={item.label}>
+                  <IconComponent className="sidebar-icon" />
+                </button>
+                <span className={`sidebar-label ${!showSidebar && 'hidden'}`}>
+                  {item.label}
+                </span>
+              </Link>
             </div>
           );
         })}
