@@ -17,6 +17,7 @@
   transition: all 0.3s ease;
   flex: 1;
 }
+
 /* Sidebar Styles */
 .sidebar {
   background: linear-gradient(180deg, #065f46 0%, #047857 50%, #059669 100%);
