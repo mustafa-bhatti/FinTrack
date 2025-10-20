@@ -2,11 +2,17 @@
   "name": "Ghulam Mustafa",
   "wallet": 5000,
   "bank": 2000,
-  "balance":7000,
+  "balance": 7000,
   "expenses": 3500,
   "income": 5000,
   "currency": "PKR",
-
+  "balanceData": {
+    "labels": ["Sep 10","Sep 14","Sep 20","Sep 24", "Oct 1", "Oct 8", "Oct 15", "Oct 22", "Oct 29"],
+    "datasets": {
+      "label": "Balance Over Time",
+      "data": [6000, 6500, 7000, 6800, 7200, 7000,2000,1200,8000]
+    }
+  },
   "transactions": [
     {
       "id": 1,
