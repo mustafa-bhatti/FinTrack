@@ -22,7 +22,7 @@ function Hero() {
         </div>
         <div className="landing-img">
           <img
-            src="/public/heroImg.png"
+            src="/public/hero-img2.png"
             alt="heroimage"
             className="w-[600px] "
           />

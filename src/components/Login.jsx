@@ -1,30 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function SignUp() {
+function Login() {
   return (
     <div className="bg-blue-100 h-[100vh]">
       <div className="flex items-center justify-center">
         <div className=" flex flex-col items-center justify-center m-auto gap-[10px]">
-          <h2 className="text-2xl">SignUp as User</h2>
+          <h2 className="text-2xl">LogIn</h2>
           <form
             action=""
             className="flex flex-col gap-[15px]  pt-[40px] pb-[40px] pl-[30px] pr-[30px] bg-gray-300"
           >
-            <div>
-              <label htmlFor="username" className="text-left">
-                User Name:
-              </label>
-              <br />
-              <input
-                type="text"
-                name="username"
-                id="username"
-                required
-                placeholder="your name"
-                className="rounded-sm  p-[3px] w-[350px]  bg-white"
-              />
-            </div>
             <div>
               <label htmlFor="userEmail" className="text-left">
                 Email:
@@ -57,21 +43,21 @@ function SignUp() {
             <div className=" flex flex-col items-center justify-center mt-[10px] ">
               <input
                 type="button"
-                value="SignUp"
-                className=" rounded-2xl bg-black text-white pt-[5px] pb-[5px] pl-[20px] pr-[20px] w-[100px] mb-[15px]  hover:cursor-pointer "
+                value="LogIn"
+                className=" rounded-2xl bg-black text-white pt-[5px] pb-[5px] pl-[20px] pr-[20px] w-[100px] mb-[15px] hover:cursor-pointer "
               />
               <p>
-                Already have Account? | <Link to="/login">LogIn</Link>
+                Did not have Account? | <Link to="/signup">SignUp</Link>
               </p>
             </div>
           </form>
         </div>
         <div>
-          <img src="/signup.png" alt="" width={600} />
+          <img src="/login.png" alt="" width={600} />
         </div>
       </div>
     </div>
   );
 }
 
-export default SignUp;
+export default Login;
