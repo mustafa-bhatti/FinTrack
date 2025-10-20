@@ -45,14 +45,13 @@ export default function IncomeExpenseChart() {
             // type="monotone"
             dataKey="income"
             name="Income"
-            fill="rgba(34, 197, 94, 1)"
+            fill="rgba(34, 197, 94, 0.8)"
           />
           <Bar
             // type="monotone"
             dataKey="expense"
             name="Expense"
             fill="rgba(239, 68, 68, 0.8)"
-     
           />
         </BarChart>
       </ResponsiveContainer>
