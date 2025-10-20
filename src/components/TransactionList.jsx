@@ -16,6 +16,7 @@ export function TransactionList() {
             value={transaction.amount}
             date={transaction.date}
             type={transaction.type}
+            currency={user.currency}
           />
         ))}
       </div>

@@ -19,6 +19,7 @@ export default function TransactionItem({
   value,
   date,
   type,
+  currency
 }) {
   const icons = {
     Eating: eating,
@@ -48,10 +49,10 @@ export default function TransactionItem({
       </div>
       <div className="text-[13px] lg:text-[14px]">
         <div>
-          <p className={`${type === 'income' ? 'text-green-500 bg-green-100 rounded-2xl p-1 text-center' : 'text-red-500 bg-red-100  rounded-2xl p-1 text-center'}`}>${type === 'income' ? value : -value}</p>
+          <p className={`${type === 'income' ? 'text-green-500 bg-green-100 rounded-2xl p-1 text-center' : 'text-red-500 bg-red-100  rounded-2xl p-1 text-center'}`}>{currency==="USD" ? "$":""}{type === 'income' ? value : -value} {currency !== "USD" ? currency : ""}</p>
           <p className='my-1'>{date}</p>
         </div>
       </div>
     </div>
-  );
+  ); 
 }

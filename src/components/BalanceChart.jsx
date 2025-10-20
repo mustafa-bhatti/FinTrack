@@ -11,18 +11,17 @@ import {
 } from 'recharts';
 export default function BalanceChart() {
   const { user } = useContext(DataContext);
+
   let balanceData = user.balanceData.labels.map((label, index) => ({
     date: label,
     balance: user.balanceData.datasets.data[index],
   }));
-  if (balanceData.length>5){
-    if (window.innerWidth <=500){
-        balanceData = balanceData.slice(-5);
-        console.log(balanceData)
-    }
-    else{
-        balanceData = balanceData.slice(-7);
-
+  if (balanceData.length > 5) {
+    if (window.innerWidth <= 500) {
+      balanceData = balanceData.slice(-5);
+      console.log(balanceData);
+    } else {
+      balanceData = balanceData.slice(-7);
     }
   }
   //   console.log(balanceData);
@@ -34,7 +33,6 @@ export default function BalanceChart() {
         <AreaChart data={balanceData}>
           <XAxis dataKey={'date'} />
           <YAxis
-    
             tickFormatter={(value) =>
               `${user.currency} ${value.toLocaleString()}`
             }

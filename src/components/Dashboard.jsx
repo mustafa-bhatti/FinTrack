@@ -6,10 +6,13 @@ import { TransactionList } from './transactionList';
 import NavbarDashboard from './NavbarDashboard';
 import Sidebar from './Sidebar';
 import BalanceChart from './BalanceChart';
+import IncomeExpenseChart from './incomeExpenseChart';
 
 function Dashboard() {
   const { user } = useContext(DataContext);
-  const [showSidebar, setShowSidebar] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(() => {
+    return window.innerWidth >= 1024;
+  });
 
   return (
     <>
@@ -24,6 +27,7 @@ function Dashboard() {
               <TransactionList />
               <BalanceChart />
             </div>
+            <IncomeExpenseChart />
           </div>
         </div>
       </div>
