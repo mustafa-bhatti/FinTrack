@@ -1,5 +1,8 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 html {
   scroll-behavior: smooth;
+}
+#hero {
+  /* background-color: green; */
 }
