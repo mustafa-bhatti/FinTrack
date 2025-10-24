@@ -1,25 +1,29 @@
 import { MdAttachMoney } from 'react-icons/md';
-import { GiReceiveMoney } from "react-icons/gi";
+import { GiReceiveMoney } from 'react-icons/gi';
 
-import { FaMoneyBillAlt } from "react-icons/fa";
+import { FaMoneyBillAlt } from 'react-icons/fa';
 import { DataContext } from '../context/data';
 import React, { useContext } from 'react';
 
 export default function Summary() {
   const { user } = useContext(DataContext);
-  let income = user.income;
+  // let income = user.income;
   // let expenses = user.expenses;
   let balance = user.balance;
   return (
     <>
-      <div className='summary-container'>
+      <div className="summary-container">
         <div className="components">
           <div className="flex flex-col justify-center items-center gap-2 p-2 ">
             <div className="icon bg-green-600">
               <MdAttachMoney fontSize="1.5em" color="white" />
             </div>
             <p>Current Balance</p>
-            <p className="text-green-900 font-bold"> {user.currency} {balance}</p>
+            <p className="text-green-900 font-bold">
+              {' '}
+              {user.currency === 'USD' ? '$' : ''} {balance}{' '}
+              {user.currency !== 'USD' ? user.currency : ''}
+            </p>
           </div>
         </div>
         <div className="components">
@@ -28,7 +32,10 @@ export default function Summary() {
               <FaMoneyBillAlt fontSize="1.5em" color="white" />
             </div>
             <p>Income</p>
-            <p className="text-green-900 font-bold">{user.currency}  {income}</p>
+            <p className="text-green-900 font-bold">
+              {user.currency === 'USD' ? '$' : ''} {user.income}{' '}
+              {user.currency !== 'USD' ? user.currency : ''}
+            </p>
           </div>
         </div>
         {/* expenses */}
@@ -38,7 +45,11 @@ export default function Summary() {
               <GiReceiveMoney fontSize="1.5em" color="white" />
             </div>
             <p>Expenses</p>
-            <p className="text-red-700 font-bold"> {user.currency} {income}</p>
+            <p className="text-red-700 font-bold">
+              {' '}
+              {user.currency === 'USD' ? '$' : ''} {user.expenses}{' '}
+              {user.currency !== 'USD' ? user.currency : ''}
+            </p>
           </div>
         </div>
       </div>
