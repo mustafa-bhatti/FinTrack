@@ -4,6 +4,10 @@ import { DataContext } from '../context/data';
 
 export function TransactionList({ name = 'Transactions' }) {
   const { user } = useContext(DataContext);
+  const userTransactions = user.transactions.filter(
+    (item) => item.type == name.toLowerCase()
+  );
+  console.log(userTransactions);
   // TODO: Sort them by date ascending order
   return (
     <div className="flex flex-col gap-3 col-2 w-full p-2 flex-1">

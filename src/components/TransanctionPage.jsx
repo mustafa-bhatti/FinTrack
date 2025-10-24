@@ -23,7 +23,7 @@ export default function TransanctionPage() {
           </div>
           <div className="divider flex flex-col flex-1 lg:flex-row gap-4">
             <TransactionList name="Income" />
-            <TransactionList name="Expenses" />
+            <TransactionList name="Expense" />
           </div>
         </div>
       </div>
