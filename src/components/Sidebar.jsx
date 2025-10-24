@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   MdDashboard,
   MdAccountBalanceWallet,
@@ -9,8 +9,9 @@ import {
 import { BiTransfer } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 export default function Sidebar({ showSidebar }) {
+  const [activeIcon, setActiveIcon] = useState('Dashboard');
   const menuItems = [
-    { icon: MdDashboard, label: 'Dashboard', active: true },
+    { icon: MdDashboard, label: 'Dashboard' },
     { icon: BiTransfer, label: 'Transactions' },
     { icon: MdAccountBalanceWallet, label: 'Wallet' },
     { icon: MdBarChart, label: 'Reports' },
@@ -28,9 +29,10 @@ export default function Sidebar({ showSidebar }) {
           return (
             <div
               key={index}
-              className={`sidebar-item ${item.active ? 'active' : ''} ${
-                item.isLogout ? 'logout' : ''
-              }`}
+              className={`sidebar-item ${
+                item.label === activeIcon ? 'active' : ''
+              } ${item.isLogout ? 'logout' : ''}`}
+              onClick={() => setActiveIcon(item.label)}
             >
               <Link
                 key={index}

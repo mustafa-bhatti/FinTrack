@@ -10,7 +10,6 @@ export function TransactionList({ name = 'Transactions' }) {
       <h1 className="font-bold">{name}</h1>
       {user.transactions.map((transaction, index) => {
         if (name == 'Income' && transaction.type == 'income') {
-          // console.log();
           return (
             <TransactionItem
               key={index}
@@ -23,7 +22,6 @@ export function TransactionList({ name = 'Transactions' }) {
             />
           );
         } else if (name == 'Transactions') {
-          console.log(name);
           return (
             <TransactionItem
               key={index}
