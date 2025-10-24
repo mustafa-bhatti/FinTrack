@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import {
   MdDashboard,
   MdAccountBalanceWallet,
@@ -7,18 +7,28 @@ import {
   MdSettings,
 } from 'react-icons/md';
 import { BiTransfer } from 'react-icons/bi';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 export default function Sidebar({ showSidebar }) {
-  const [activeIcon, setActiveIcon] = useState('Dashboard');
   const menuItems = [
-    { icon: MdDashboard, label: 'Dashboard' },
-    { icon: BiTransfer, label: 'Transactions' },
-    { icon: MdAccountBalanceWallet, label: 'Wallet' },
-    { icon: MdBarChart, label: 'Reports' },
-    { icon: MdSettings, label: 'Settings' },
-    { icon: MdLogout, label: 'Log Out', isLogout: true },
+    { icon: MdDashboard, label: 'Dashboard', path: '/dashboard' },
+    {
+      icon: BiTransfer,
+      label: 'Transactions',
+      path: '/dashboard/transactions',
+    },
+    {
+      icon: MdAccountBalanceWallet,
+      label: 'Wallet',
+      path: '/dashboard/wallet',
+    },
+    { icon: MdBarChart, label: 'Reports', path: '/dashboard/reports' },
+    { icon: MdSettings, label: 'Settings', path: '/dashboard/settings' },
+    { icon: MdLogout, label: 'Log Out', path: '/login', isLogout: true },
   ];
-
+  const location = useLocation();
+  const isActivePath = (currentPath) => {
+    return location.pathname === currentPath;
+  }  
   return (
     <div
       className={`sidebar ${showSidebar ? 'sidebar-open' : 'sidebar-closed'}`}
@@ -26,13 +36,13 @@ export default function Sidebar({ showSidebar }) {
       <nav className="sidebar-nav">
         {menuItems.map((item, index) => {
           const IconComponent = item.icon;
+          const active = isActivePath(item.path);
           return (
             <div
               key={index}
               className={`sidebar-item ${
-                item.label === activeIcon ? 'active' : ''
+                active ? 'active' : ''
               } ${item.isLogout ? 'logout' : ''}`}
-              onClick={() => setActiveIcon(item.label)}
             >
               <Link
                 key={index}
