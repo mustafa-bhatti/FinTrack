@@ -22,7 +22,8 @@ export default function TransanctionPage() {
             </button>
           </div>
           <div className="divider flex flex-col flex-1 lg:flex-row gap-4">
-            <TransactionList />
+            <TransactionList name="Income" />
+            <TransactionList name="Expense" />
           </div>
         </div>
       </div>
