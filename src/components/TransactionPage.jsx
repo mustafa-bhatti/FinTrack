@@ -5,14 +5,14 @@ import Sidebar from './Sidebar';
 import { TransactionList } from './transactionList';
 import AddIncome from './AddIncome';
 import '../styles/transactionPage.css';
-
+import AddExpense from './AddExpense';
 export default function TransactionPage() {
   const [showSidebar, setShowSidebar] = useState(() => {
     return window.innerWidth >= 1024;
   });
 
-  const showDialog = () => {
-    let dialog = document.querySelector('dialog');
+  const showDialog = (name) => {
+    let dialog = document.querySelector(`.${name}-dialog`);
     dialog.showModal();
   };
   return (
@@ -22,16 +22,20 @@ export default function TransactionPage() {
         <Sidebar showSidebar={showSidebar} />
         <div className="transaction-dashboard">
           <AddIncome />
+          <AddExpense />
           <div className="t-buttons flex gap-15 justify-center">
             {/* buttons */}
             <button
-              onClick={() => showDialog()}
+              onClick={() => showDialog('income')}
               className="bg-green-200 p-5 rounded-2xl text-green-900 font-bold uppercase hover:border hover:-translate-y-0.5 transition-all"
             >
               Add Income
             </button>
 
-            <button className="bg-red-200 p-5 rounded-2xl text-red-950 font-bold uppercase hover:-translate-y-1 hover:border transition-all">
+            <button
+              onClick={() => showDialog('expense')}
+              className="bg-red-200 p-5 rounded-2xl text-red-950 font-bold uppercase hover:-translate-y-1 hover:border transition-all"
+            >
               Add Expense
             </button>
           </div>
