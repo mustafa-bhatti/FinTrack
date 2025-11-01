@@ -7,11 +7,13 @@ import { registerUser, login } from '../controllers/auth.js';
 import express from 'express';
 import { AuthenticateUser } from '../middleware/authmiddleware.js';
 const router = express.Router();
-router.get('/users', AuthenticateUser, getAllUsers);
-router.post('/users/add', postUser);
-router.get('/users/:user_id/balances', getBalancesByUser);
-router.post('/users/:user_id/balances/add', postBalance);
 router.post('/auth/register', registerUser);
 router.post('/auth/login', login);
+
+// User Routes Protected by Authentication Middleware
+router.get('/users', AuthenticateUser, getAllUsers);
+router.post('/users/add', AuthenticateUser, postUser);
+router.get('/users/:user_id/balances', AuthenticateUser, getBalancesByUser);
+router.post('/users/:user_id/balances/add', AuthenticateUser, postBalance);
 
 export default router;

@@ -7,23 +7,43 @@ dotenv.config();
 const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    // Validation
     if (!name || !email || !password) {
       return res
         .status(400)
         .json({ message: 'All fields are required', success: false });
     }
+    if (password.length < 6) {
+      return res.status(400).json({
+        message: 'Password must be at least 6 characters long',
+        success: false,
+      });
+    }
+
+    // Check if user already exists
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
       return res
         .status(400)
         .json({ message: 'User already exists', success: false });
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new userModel({ name, email, password: hashedPassword });
     await newUser.save();
+
+    const token = jwt.sign(
+      {
+        user_id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
     return res
       .status(201)
-      .json({ message: 'User registered successfully', success: true });
+      .json({ message: 'User registered successfully', success: true, token });
   } catch (error) {
     return res.status(500).json({
       message: 'Error registering user',
@@ -36,12 +56,14 @@ const registerUser = async (req, res) => {
 const login = async (req, res) => {
   try {
     let { email, password } = req.body;
+    // Validation
     if (!email || !password) {
       return res.status(400).json({
         message: 'All fields are required',
         success: false,
       });
     }
+    // Check if user exists
     const user = await userModel.findOne({ email });
     if (!user) {
       return res.status(400).json({
@@ -49,6 +71,7 @@ const login = async (req, res) => {
         success: false,
       });
     }
+    // Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({
@@ -60,7 +83,7 @@ const login = async (req, res) => {
 
     let token = jwt.sign(
       {
-        id: user._id,
+        user_id: user._id,
         name: user.name,
         email: user.email,
       },
