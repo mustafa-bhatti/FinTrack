@@ -9,6 +9,15 @@ import { AuthenticateUser } from '../middleware/authmiddleware.js';
 const router = express.Router();
 router.post('/auth/register', registerUser);
 router.post('/auth/login', login);
+router.get('/auth/verify', AuthenticateUser, (req, res) => {
+  res
+    .status(200)
+    .json({
+      message: 'Authentication successful',
+      success: true,
+      user: req.user,
+    });
+});
 
 // User Routes Protected by Authentication Middleware
 router.get('/users', AuthenticateUser, getAllUsers);

@@ -13,16 +13,16 @@ export const AuthenticateUser = async (req, res, next) => {
         success: false,
       });
     }
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await userModel.findById(decoded.user_id).select('-password');
-    if (!decoded) {
-      return res.status(401).json({
-        message: 'Token is not valid',
-        success: false,
-      });
-    }
-    req.user = decoded;
-    next();
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        return res.status(401).json({
+          message: 'Token is not valid',
+          success: false,
+        });
+      }
+      req.user = decoded;
+      next();
+    });
   } catch (error) {
     return res.status(500).json({
       message: 'Error authenticating user',
