@@ -5,7 +5,7 @@ import SignUp from '../components/SignUp';
 import Dashboard from '../components/Dashboard';
 import DataProvider from '../context/dataProvider';
 import Login from '../components/Login';
-import TransanctionPage from '../components/TransanctionPage';
+import TransactionPage from '../components/TransactionPage';
 function AppRouter() {
   return (
     <Router>
@@ -15,10 +15,7 @@ function AppRouter() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
-          <Route
-            path="/dashboard/transactions"
-            element={<TransanctionPage />}
-          />
+          <Route path="/dashboard/transactions" element={<TransactionPage />} />
         </Routes>
       </DataProvider>
     </Router>

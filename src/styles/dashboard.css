@@ -119,6 +119,9 @@
   justify-content: center;
 }
 
+button {
+  cursor: pointer;
+}
 /* Green theme for icons */
 .icon.bg-green-600 {
   background: linear-gradient(135deg, #059669 0%, #047857 100%);

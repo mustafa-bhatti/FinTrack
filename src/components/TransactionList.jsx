@@ -7,7 +7,7 @@ export function TransactionList({ name = 'Transactions' }) {
   const userTransactions = user.transactions.filter(
     (item) => item.type == name.toLowerCase()
   );
-  console.log(userTransactions);
+  // console.log(userTransactions);
   // TODO: Sort them by date ascending order
   return (
     <div className="flex flex-col gap-3 col-2 w-full p-2 flex-1">
@@ -37,7 +37,7 @@ export function TransactionList({ name = 'Transactions' }) {
               currency={user.currency}
             />
           );
-        } else if (name == 'Expenses' && transaction.type == 'expense') {
+        } else if (name == 'Expense' && transaction.type == 'expense') {
           return (
             <TransactionItem
               key={index}
