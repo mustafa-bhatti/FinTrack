@@ -17,7 +17,9 @@ let expenseSchema = mongoose.Schema({
   },
   exp_category: {
     type: String,
+    enum: ['Eating', 'Transport', 'Utilities', 'Entertainment', 'Other'], 
     required: true,
+
   },
 });
 

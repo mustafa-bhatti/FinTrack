@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 let incomeSchema = mongoose.Schema({
-
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
@@ -11,10 +10,14 @@ let incomeSchema = mongoose.Schema({
     required: true,
   },
   inc_value: {
-    type: Number,
+    type: String,
     default: 0,
   },
-    inc_source: {
+  inc_source: {
+    type: String,
+    required: true,
+  },
+  inc_location: {
     type: String,
     required: true,
   },
