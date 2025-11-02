@@ -7,6 +7,7 @@ import DataProvider from '../context/dataProvider';
 import Login from '../components/Login';
 import TransactionPage from '../components/TransactionPage';
 import { AuthProvider } from '../context/AuthContext';
+import ProtectedRoute from '../components/ProtectedRoute';
 function AppRouter() {
   return (
     <AuthProvider>
@@ -15,11 +16,22 @@ function AppRouter() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route
               path="/dashboard/transactions"
-              element={<TransactionPage />}
+              element={
+                <ProtectedRoute>
+                  <TransactionPage />
+                </ProtectedRoute>
+              }
             />
           </Routes>
         </DataProvider>

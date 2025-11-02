@@ -87,6 +87,7 @@ function Login() {
                   placeholder="email"
                   required
                   onChange={handleChange}
+                  value={formData.email}
                   className="rounded-sm  pt-[4px] pb-[4px] pl-[3px] pr-[3px] w-[350px]  bg-white max-md:w-auto"
                 />
               </div>
@@ -103,6 +104,7 @@ function Login() {
                   placeholder="password"
                   required
                   onChange={handleChange}
+                  value={formData.password}
                   className="rounded-sm  pt-[4px] pb-[4px] pl-[3px] pr-[3px] w-[350px]  bg-white max-md:w-auto"
                 />
               </div>
@@ -111,9 +113,9 @@ function Login() {
                   type="submit"
                   value="LogIn"
                   disabled={loading}
-                  className=" rounded-2xl bg-black text-white pt-[5px] pb-[5px] pl-[20px] pr-[20px] w-[100px] mb-[15px] hover:cursor-pointer "
+                  className=" rounded-2xl bg-black text-white pt-[5px] pb-[5px] pl-[20px] pr-[20px]  mb-[15px] hover:cursor-pointer "
                 >
-                  LogIn
+                  {loading ? 'Logging In...' : 'LogIn'}
                 </button>
                 <p>
                   Did not have Account? |{' '}
