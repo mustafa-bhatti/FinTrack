@@ -7,7 +7,11 @@ import { useMemo } from 'react';
 import { useEffect } from 'react';
 
 export function TransactionList({ name = 'Transactions' }) {
-  const { getIncome, loading } = useContext(AuthContext);
+  const {
+    getIncome,
+    loading,
+    user: { currency },
+  } = useContext(AuthContext);
   const [incomeData, setIncomeData] = useState([]);
 
   useEffect(() => {
@@ -28,17 +32,17 @@ export function TransactionList({ name = 'Transactions' }) {
   return (
     <div className="flex flex-col gap-3 col-2 w-full p-2 flex-1">
       <h1 className="font-bold">{name}</h1>
-      {user.transactions.map((transaction, index) => {
-        if (name == 'Income' && transaction.type == 'income') {
+      {incomeData.map((transaction, index) => {
+        if (name == 'Income' || transaction.type == 'income') {
           return (
             <TransactionItem
               key={index}
-              category={incomeData.category}
-              source={transaction.source}
-              value={transaction.amount}
+              category={transaction.source}
+              source={transaction.location}
+              value={transaction.value}
               date={transaction.date}
-              type={transaction.type}
-              currency={user.currency}
+              type={'income'}
+              currency={currency}
             />
           );
         } else if (name == 'Transactions') {
