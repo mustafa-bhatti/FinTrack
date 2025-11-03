@@ -1,8 +1,24 @@
 import React, { useContext } from 'react';
 import TransactionItem from './transactionItem';
 import { DataContext } from '../context/data';
+import { AuthContext } from '../context/auth';
+import { useState } from 'react';
+import { useMemo } from 'react';
+import { useEffect } from 'react';
 
 export function TransactionList({ name = 'Transactions' }) {
+  const { getIncome, loading } = useContext(AuthContext);
+  const [incomeData, setIncomeData] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      let incomeData = await getIncome();
+      setIncomeData(incomeData);
+      console.log(incomeData);
+    };
+    getData();
+  }, []);
+
   const { user } = useContext(DataContext);
   const userTransactions = user.transactions.filter(
     (item) => item.type == name.toLowerCase()
@@ -17,7 +33,7 @@ export function TransactionList({ name = 'Transactions' }) {
           return (
             <TransactionItem
               key={index}
-              category={transaction.category}
+              category={incomeData.category}
               source={transaction.source}
               value={transaction.amount}
               date={transaction.date}

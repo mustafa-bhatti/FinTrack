@@ -4,16 +4,8 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { AuthContext } from './auth';
 
-// export const useAuth = () => {
-//   const context = useContext(AuthContext);
-//   if (!context) {
-//     throw new Error('useAuth must be used within an AuthProvider');
-//   }
-//   return context;
-// };
-
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(localStorage.getItem('user') || null);
   const [loading, setLoading] = useState(true);
   // const [error, setError] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token') || null);
@@ -29,11 +21,13 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
+      const storedUser = localStorage.getItem('user');
       if (token) {
         try {
           const response = await axios.get(`${API_BASE_URL}/auth/verify`);
           if (response.data.success) {
-            setUser(response.data.user);
+            // console.log('checkAuth', storedUser);
+            setUser(JSON.parse(storedUser));
           } else {
             logout();
           }
@@ -46,6 +40,7 @@ export const AuthProvider = ({ children }) => {
     };
     checkAuth();
   }, [token]);
+
   const register = async (userData) => {
     try {
       const response = await axios.post(
@@ -55,8 +50,10 @@ export const AuthProvider = ({ children }) => {
       if (response.data.success) {
         const { token, user } = response.data;
         localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+        // add user to localstorage
+
         setToken(token);
-        setUser(user);
         return { success: true, message: response.data.message };
       }
     } catch (error) {
@@ -71,6 +68,7 @@ export const AuthProvider = ({ children }) => {
         const { token, user } = response.data;
         localStorage.setItem('token', token);
         setToken(token);
+        localStorage.setItem('user', JSON.stringify(user));
         setUser(user);
         return { success: true, message: response.data.message };
       }
@@ -83,9 +81,24 @@ export const AuthProvider = ({ children }) => {
   };
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setToken(null);
     setUser(null);
     delete axios.defaults.headers.common['Authorization'];
+  };
+  const getIncome = async () => {
+    try {
+      // console.log('Fetching income data...');
+      // console.log(user.id);
+      const response = await axios.get(
+        `${API_BASE_URL}/users/${user.id}/incomes`
+      );
+      if (response.data.success) {
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error('Error fetching income data:', error);
+    }
   };
 
   const value = {
@@ -96,8 +109,8 @@ export const AuthProvider = ({ children }) => {
     logout,
     token,
     isAuthenticated: !!user,
+    getIncome,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
-

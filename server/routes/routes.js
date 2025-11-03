@@ -18,11 +18,16 @@ router.get('/auth/verify', AuthenticateUser, (req, res) => {
   res.status(200).json({
     message: 'Authentication successful',
     success: true,
-    user: req.user,
+    user: {
+      id: req.user.user_id,
+      name: req.user.name,
+      email: req.user.email,
+    },
   });
 });
 
 // User Routes Protected by Authentication Middleware
+// TODO:Delete User based on ROLE
 router.get('/users', AuthenticateUser, getAllUsers);
 router.post('/users/add', AuthenticateUser, postUser);
 router.get('/users/:user_id/balances', AuthenticateUser, getBalancesByUser);
