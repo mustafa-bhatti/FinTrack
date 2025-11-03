@@ -2,8 +2,8 @@ import incomeModel from '../models/income.model.js';
 
 export const addIncome = async (req, res) => {
   try {
-    let { user_id, inc_date, inc_value, inc_source, inc_location } = req.body;
-    if (!user_id || !inc_date || !inc_value || !inc_source || !inc_location) {
+    let { user_id, date, value, source, location } = req.body;
+    if (!user_id || !date || !value || !source || !location) {
       return res.status(400).json({
         message: 'All fields are required',
         success: false,
@@ -11,12 +11,13 @@ export const addIncome = async (req, res) => {
     }
     const newIncome = new incomeModel({
       user_id,
-      inc_date,
-      inc_value,
-      inc_source,
-      inc_location,
+      date: new Date(date),
+      value: parseFloat(value),
+      source,
+      location,
     });
     await newIncome.save();
+
     return res.status(201).json({
       message: 'Income added successfully',
       success: true,
@@ -34,7 +35,10 @@ export const addIncome = async (req, res) => {
 export const getIncomesByUser = async (req, res) => {
   try {
     const { user_id } = req.params;
-    const incomes = await incomeModel.find({ user_id });
+    const incomes = await incomeModel
+      .find({ user_id })
+      .sort({ date: -1 })
+      .exec();
     if (!incomes || incomes.length === 0) {
       return res.status(404).json({
         message: 'No incomes found for this user',
