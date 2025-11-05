@@ -10,7 +10,10 @@ function Features() {
     >
       <h2 className="text-center text-3xl mb-[20px] font-semibold">Features</h2>
       <div className="flex items-center justify-center gap-10 m-[50px]   max-lg:flex-col max-lg:gap-15 ">
-        <div className=" flex flex-1 flex-col  items-center justify-center text-center pl-[20px] pr-[20px] rounded-md shadow-xl/10 cursor-pointer  hover:inset-shadow-sm hover:shadow-xl/20  hover:bg-green-400 hover:text-white max-md:hover:bg-green-400 max-md:hover:text-white ">
+        <div
+          className=" flex flex-1 flex-col  items-center justify-center text-center pl-[20px] pr-[20px] rounded-md shadow-xl/10 cursor-pointer transition duration-400 ease-in-out transform 
+                       hover:-translate-y-1 hover:scale-100 hover:inset-shadow-sm hover:shadow-xl/20  hover:bg-green-300 hover:text-white max-md:hover:bg-green-400 max-md:hover:text-white "
+        >
           <div className="flex align-center justify-center">
             <PiChartPieSliceFill
               color="yellow"
@@ -27,7 +30,10 @@ function Features() {
             </p>
           </div>
         </div>
-        <div className=" flex flex-1 flex-col  items-center justify-center text-center pl-[20px] pr-[20px] rounded-md shadow-xl/10 cursor-pointer  hover:inset-shadow-sm hover:shadow-xl/20  hover:bg-green-400 hover:text-white max-md:hover:bg-green-400 max-md:hover:text-white">
+        <div
+          className=" flex flex-1 flex-col  items-center justify-center text-center pl-[20px] pr-[20px] rounded-md shadow-xl/10 cursor-pointer transition duration-400 ease-in-out transform 
+                       hover:-translate-y-1 hover:scale-100 hover:inset-shadow-sm hover:shadow-xl/20  hover:bg-green-300 hover:text-white max-md:hover:bg-green-400 max-md:hover:text-white"
+        >
           <div className="flex align-center justify-center ">
             <HiCurrencyDollar
               color="green"
@@ -47,7 +53,10 @@ function Features() {
             </p>
           </div>
         </div>
-        <div className=" flex flex-1 flex-col  items-center justify-center text-center pl-[20px] pr-[20px] rounded-md shadow-xl/10 cursor-pointer  hover:inset-shadow-sm hover:shadow-xl/20 hover:bg-green-400 hover:text-white max-md:hover:bg-green-400 max-md:hover:text-white">
+        <div
+          className=" flex flex-1 flex-col  items-center justify-center text-center pl-[20px] pr-[20px] rounded-md shadow-xl/10 cursor-pointer transition duration-400 ease-in-out transform 
+                       hover:-translate-y-1 hover:scale-100 hover:inset-shadow-sm hover:shadow-xl/20 hover:bg-green-300 hover:text-white max-md:hover:bg-green-400 max-md:hover:text-white"
+        >
           <div className="flex align-center justify-center">
             <IoTimer
               color="blue"
@@ -59,9 +68,9 @@ function Features() {
             {" "}
             <h1 className="font-semibold text-xl">Transaction Management</h1>
             <p className=" text-center  max-lg:w-auto  max-lg:text-center leading-7">
-              Monitor all your transactions in one place secure, organized, and
-              instantly accessible. Never lose track of where your money goes.
-              jdhfu ifjir
+              Monitor all your transactions in one place fully secure, neatly
+              organized, and instantly accessible anytime. Never lose track of
+              where your money actually goes.
             </p>
           </div>
         </div>
