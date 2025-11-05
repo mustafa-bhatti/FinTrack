@@ -116,6 +116,18 @@ export const AuthProvider = ({ children }) => {
       console.error('Error adding transaction:', error);
     }
   };
+  const deleteTransaction = async (transactionId) => {
+    try {
+      const response = await axios.delete(
+        `${API_BASE_URL}/users/transactions/delete/${transactionId}`
+      );
+      if (response.status === 200) {
+        return { message: response.data.message, success: true };
+      }
+    } catch (error) {
+      console.error('Error deleting transaction:', error);
+    }
+  };
 
   const value = {
     user,
@@ -127,6 +139,7 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated: !!user,
     getTransactions,
     addTransaction,
+    deleteTransaction,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

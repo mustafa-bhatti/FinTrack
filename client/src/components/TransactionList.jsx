@@ -17,7 +17,7 @@ export function TransactionList({ name = 'Transactions' }) {
       console.log(incomeData);
     };
     getData();
-  }, []);
+  }, [loading]);
 
   const { user } = useContext(DataContext);
   // const userTransactions = user.transactions.filter(
@@ -29,11 +29,13 @@ export function TransactionList({ name = 'Transactions' }) {
     <div className="flex flex-col gap-3 col-2 w-full p-2 flex-1">
       <h1 className="font-bold">{name}</h1>
       {incomeData?.map((transaction, index) => {
+        // console.log(transaction._id);
         transaction.type = transaction.type.toLowerCase();
         if (name == 'Income' && transaction.type == 'income') {
           return (
             <TransactionItem
               key={index}
+              id={transaction._id}
               category={transaction.category}
               source={transaction.source}
               value={transaction.amount}
@@ -42,10 +44,11 @@ export function TransactionList({ name = 'Transactions' }) {
               currency={user.currency}
             />
           );
-        } else if (name == "Transactions") {
+        } else if (name == 'Transactions') {
           return (
             <TransactionItem
               key={index}
+              id={transaction._id}
               category={transaction.category}
               source={transaction.source}
               value={transaction.amount}
@@ -54,10 +57,11 @@ export function TransactionList({ name = 'Transactions' }) {
               currency={user.currency}
             />
           );
-        } else if (name == "Expense" && transaction.type == "expense") {
+        } else if (name == 'Expense' && transaction.type == 'expense') {
           return (
             <TransactionItem
               key={index}
+              id={transaction._id}
               category={transaction.category}
               source={transaction.source}
               value={transaction.amount}
