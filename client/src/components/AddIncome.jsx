@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { set, useForm } from 'react-hook-form';
+import { AuthContext } from '../context/auth';
 export default function AddIncome() {
+  const { addTransaction } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -9,7 +11,11 @@ export default function AddIncome() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
+    data.type = 'income';
+    const response = await addTransaction(data);
+    console.log(response);
+
+    // Call the API to add the income
   };
 
   return (
@@ -19,13 +25,13 @@ export default function AddIncome() {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-3 p-4 "
         >
-          <h2 className="font-bold text-2xl border-b-1 border-gray-200 pb-2">
+          <h2 className="font-bold text-2xl border-b border-gray-200 pb-2">
             Add New Income
           </h2>
-          <p className="text-s">Income Source</p>
+          <p className="text-s">Income Category</p>
           <select
             className="p-2 border border-gray-300 rounded bg-gray-200"
-            {...register('source', { required: true })}
+            {...register('category', { required: true })}
           >
             <option value="salary">Salary</option>
             <option value="business">Business</option>
@@ -52,6 +58,14 @@ export default function AddIncome() {
             className="p-2 border border-gray-300 rounded bg-gray-200"
             {...register('date', { required: true })}
           />
+          <p className="text-s"> </p>
+          <select
+            className="p-2 border border-gray-300 rounded bg-gray-200"
+            {...register('source', { required: true })}
+          >
+            <option value="bank">Bank</option>
+            <option value="wallet">Wallet</option>
+          </select>
           <button
             type="submit"
             className="bg-green-600 text-white p-2 rounded mt-4 hover:bg-green-700"

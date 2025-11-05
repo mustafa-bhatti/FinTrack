@@ -86,18 +86,34 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     delete axios.defaults.headers.common['Authorization'];
   };
-  const getIncome = async () => {
+  const getTransactions = async () => {
     try {
       // console.log('Fetching income data...');
       // console.log(user.id);
       const response = await axios.get(
-        `${API_BASE_URL}/users/${user.id}/incomes`
+        `${API_BASE_URL}/users/${user.id}/transactions`
       );
-      if (response.data.success) {
-        return response.data.data;
+      if (response.status === 200) {
+        return response.data.transactions;
       }
     } catch (error) {
-      console.error('Error fetching income data:', error);
+      console.error('Error fetching transactions data:', error);
+    }
+  };
+
+  const addTransaction = async (transactionData) => {
+    try {
+      transactionData.user_id = user.id;
+      console.log(transactionData);
+      const response = await axios.post(
+        `${API_BASE_URL}/users/transactions/add`,
+        transactionData
+      );
+      if (response.status === 200) {
+        return response.data.message;
+      }
+    } catch (error) {
+      console.error('Error adding transaction:', error);
     }
   };
 
@@ -109,7 +125,8 @@ export const AuthProvider = ({ children }) => {
     logout,
     token,
     isAuthenticated: !!user,
-    getIncome,
+    getTransactions,
+    addTransaction,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
