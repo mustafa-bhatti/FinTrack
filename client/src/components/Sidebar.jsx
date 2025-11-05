@@ -33,7 +33,6 @@ export default function Sidebar({ showSidebar }) {
   const isActivePath = (currentPath) => {
     return location.pathname === currentPath;
   };
-
   return (
     <div
       className={`sidebar ${showSidebar ? "sidebar-open" : "sidebar-closed"}`}

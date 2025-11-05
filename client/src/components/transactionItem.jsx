@@ -19,7 +19,7 @@ export default function TransactionItem({
   value,
   date,
   type,
-  currency
+  currency,
 }) {
   const icons = {
     Eating: eating,
@@ -35,24 +35,45 @@ export default function TransactionItem({
     Transport: transport,
     Other: fallback,
   };
-
-  const Icon = icons[category] || fallback;
+  const Uppercase = (text) => {
+    console.log(text.slice(1));
+    return text[0].toUpperCase() + text.slice(1);
+  };
+  const Icon = icons[Uppercase(category)] || fallback;
 
   return (
     <div className="transaction-item flex justify-between items-center p-2 rounded-lg shadow-lg  hover:scale-103 transition duration-300 bg-white ">
       <div className="flex gap-3 p-4 justify-center items-center">
         <img src={Icon} alt={category} className=""></img>
         <div className="font-semibold text-[14px] lg:text-[16px]">
-          <p>{category}</p>
-          <p className='text-[12px] text-gray-700 font-medium'>{source}</p>
+          <p>{Uppercase(category)}</p>
+          <p className="text-[12px] text-gray-700 font-medium">
+            {Uppercase(source)}
+          </p>
         </div>
       </div>
       <div className="text-[13px] lg:text-[14px]">
-        <div>
-          <p className={`${type === 'income' ? 'text-green-500 bg-green-100 rounded-2xl p-1 text-center' : 'text-red-500 bg-red-100  rounded-2xl p-1 text-center'}`}>{currency==="USD" ? "$":""}{type === 'income' ? value : -value} {currency !== "USD" ? currency : ""}</p>
-          <p className='my-1'>{date}</p>
+        <div className='flex flex-col'>
+          <p
+            className={`${
+              type === 'income'
+                ? 'text-green-500 bg-green-100 rounded-2xl p-1 px-4  flex-0 self-end'
+                : 'text-red-500 bg-red-100  rounded-2xl p-1 px-4 flex-0 self-end'
+            }`}
+          >
+            {currency == 'USD' ? '$' : ''}
+            {type === 'income' ? value : -value}{' '}
+            {currency !== 'USD' ? currency : ''}
+          </p>
+          <p className="my-1 flex-1">
+            {new Date(date).toLocaleDateString(undefined, {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </p>
         </div>
       </div>
     </div>
-  ); 
+  );
 }
