@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import TransactionItem from './transactionItem';
-import { DataContext } from '../context/data';
+import React, { useContext } from "react";
+import TransactionItem from "./transactionItem";
+import { DataContext } from "../context/data";
 
-export function TransactionList({ name = 'Transactions' }) {
+export function TransactionList({ name = "Transactions" }) {
   const { user } = useContext(DataContext);
   const userTransactions = user.transactions.filter(
     (item) => item.type == name.toLowerCase()
@@ -13,7 +13,7 @@ export function TransactionList({ name = 'Transactions' }) {
     <div className="flex flex-col gap-3 col-2 w-full p-2 flex-1">
       <h1 className="font-bold">{name}</h1>
       {user.transactions.map((transaction, index) => {
-        if (name == 'Income' && transaction.type == 'income') {
+        if (name == "Income" && transaction.type == "income") {
           return (
             <TransactionItem
               key={index}
@@ -25,7 +25,7 @@ export function TransactionList({ name = 'Transactions' }) {
               currency={user.currency}
             />
           );
-        } else if (name == 'Transactions') {
+        } else if (name == "Transactions") {
           return (
             <TransactionItem
               key={index}
@@ -37,7 +37,7 @@ export function TransactionList({ name = 'Transactions' }) {
               currency={user.currency}
             />
           );
-        } else if (name == 'Expense' && transaction.type == 'expense') {
+        } else if (name == "Expense" && transaction.type == "expense") {
           return (
             <TransactionItem
               key={index}

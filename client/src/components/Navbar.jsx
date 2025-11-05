@@ -14,12 +14,12 @@ function Navbar() {
     navMenu = (
       // for mobile and tablet screen
       <div
-        className="fixed top-[60px] left-0 h-[100vh] w-[100%] text-white
-  bg-gradient-to-b from-[#065f46] via-[#047857] to-[#059669] transition-[height] duration-2000 ease-in-out
+        className="fixed top-[60px] left-0 h-screen w-full text-white
+  bg-linear-to-b from-[#065f46] via-[#047857] to-[#059669] transition-[height] duration-2000 ease-in-out
   lg:hidden"
       >
-        <ul className="flex flex-col items-end justify-between gap-5 pt-[10px] pr-[15px] font-large max-md:font-light max-md: text-xs">
-          <li className="hover:font-[500] max-md:hover:text-green-500 ">
+        <ul className="flex flex-col items-end justify-between gap-5 pt-2.5 pr-[15px] font-large max-md:font-light max-md: text-xs">
+          <li className="hover:font-[500px] max-md:hover:text-green-500 ">
             {" "}
             <a
               onClick={() => {
@@ -31,7 +31,7 @@ function Navbar() {
               Home
             </a>{" "}
           </li>
-          <li className=" hover:text-green-500 hover:font-[500] max-md:hover:text-green-500 ">
+          <li className=" hover:text-green-500 hover:font-[500px] max-md:hover:text-green-500 ">
             {" "}
             <a
               onClick={() => {
@@ -43,7 +43,7 @@ function Navbar() {
               About
             </a>{" "}
           </li>
-          <li className="hover:text-green-500 hover:font-[500] max-md:hover:text-green-500 ">
+          <li className="hover:text-green-500 hover:font-[500px] max-md:hover:text-green-500 ">
             <a
               onClick={() => {
                 toggleMenu();
@@ -54,10 +54,10 @@ function Navbar() {
               Features
             </a>{" "}
           </li>
-          <li className=" hover:text-blue-700 hover:font-[500]">
-            <button className="rounded-sm bg-green-500 pt-[7px] pb-[7px] pl-[14px] pr-[14px] text-white hover:bg-green-500 max-md:hover:bg-green-500 shadow-xl/20">
-              <Link to="/signup" className=" text-[18px] font-semibold">
-                SignUp
+          <li className=" hover:text-blue-700 hover:font-[500px]">
+            <button className="rounded-sm bg-green-500 pt-[7px] pb-[7px] pl-3.5 pr-3.5 text-white hover:bg-green-500 max-md:hover:bg-green-500 shadow-xl/20">
+              <Link to="/LogIn" className=" text-[18px] font-semibold">
+                Sign In
               </Link>
             </button>
           </li>
@@ -68,7 +68,7 @@ function Navbar() {
 
   return (
     <>
-      <nav className="flex flex-row items-center justify-between pl-[13px] pr-[13px] pb-[10px] pt-[10px] shadow-md w-[100%] fixed bg-white   max-md:pb-[10px]">
+      <nav className="flex flex-row items-center justify-between pl-[13px] pr-[13px] pb-2.5 pt-2.5 shadow-md w-full fixed bg-white   max-md:pb-2.5">
         <div className="flex flex-row">
           <a href="#hero">
             <img src={logo} alt="logo" className="w-[125px] cursor-pointer" />
@@ -76,27 +76,27 @@ function Navbar() {
         </div>
         {/* for labtop and desktop screen */}
         <ul className="flex flex-row items-center justify-between gap-10  font-medium max-md:font-light max-md: text-xs max-lg:hidden lg:flex-row">
-          <li className=" hover:text-green-500 hover:font-[500] max-md:hover:text-green-500 ">
+          <li className=" hover:text-green-500 hover:font-[500px] max-md:hover:text-green-500 ">
             {" "}
             <a href="#hero" className="text-[18px]">
               Home
             </a>{" "}
           </li>
-          <li className=" hover:text-green-500 hover:font-[500] max-md:hover:text-green-500 ">
+          <li className=" hover:text-green-500 hover:font-[500px] max-md:hover:text-green-500 ">
             {" "}
             <a href="#about" className="text-[18px]">
               About
             </a>{" "}
           </li>
-          <li className="hover:text-green-500 hover:font-[500] max-md:hover:text-green-500 ">
+          <li className="hover:text-green-500 hover:font-[500px] max-md:hover:text-green-500 ">
             <a href="#features" className=" text-[18px]">
               Features
             </a>{" "}
           </li>
-          <li className=" hover:text-blue-700 hover:font-[500]">
-            <button className="rounded-sm bg-green-700 pt-[7px] pb-[7px] pl-[14px] pr-[14px] text-white hover:bg-green-500 max-md:hover:bg-green-500 ">
-              <Link to="/signup" className=" text-[18px]">
-                SignUp
+          <li className=" hover:text-blue-700 hover:font-[500px]">
+            <button className="rounded-sm bg-green-700 pt-[7px] pb-[7px] pl-3.5 pr-3.5 text-white hover:bg-green-500 max-md:hover:bg-green-500 ">
+              <Link to="/LogIn" className=" text-[18px]">
+                Sign In
               </Link>
             </button>
           </li>

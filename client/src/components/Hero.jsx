@@ -5,10 +5,10 @@ function Hero() {
   return (
     <>
       <div
-        className="flex align-center justify-evenly h-30vh pt-[80px] bg-white-900 max-md:flex-col "
+        className="flex align-center justify-evenly h-30vh pt-20 bg-white-900 max-md:flex-col "
         id="hero"
       >
-        <div className="lg:inline lg:pt-[15%] pl-[10px] max-md:pl-[10px] pr-[10px] pt-[10px] lg:pl-[10px]  max-md:flex max-md:flex-col max-md:text-center max-md:justify-center max-md:m-auto">
+        <div className="lg:inline lg:pt-[15%] pl-2.5 max-md:pl-2.5 pr-2.5 pt-2.5 lg:pl-2.5  max-md:flex max-md:flex-col max-md:text-center max-md:justify-center max-md:m-auto">
           <h1 className="text-5xl mb-[15px] font-semibold text-[green] max-md:text-3xl">
             Welcome to FinTrack!
           </h1>
@@ -17,7 +17,7 @@ function Hero() {
             in one clean dashboard.
           </p>
           <button
-            className=" rounded-2xl pt-[5px] pb-[5px] pl-[20px] pr-[20px] mt-[50px] text-white text-center font-[18px]  bg-green-900
+            className=" rounded-2xl pt-[5px] pb-[5px] pl-5 pr-5 mt-[50px] text-white text-center font-[18px]  bg-green-900
              transition duration-500 ease-in-out transform 
                        hover:-translate-y-1 hover:scale-100 hover:bg-green-500  cursor-pointer text-xl max-md:flex  justify-center m-auto"
           >

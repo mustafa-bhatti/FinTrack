@@ -1,20 +1,20 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.png';
-import signUpImg from '../assets/landingPage/signup.png';
-import Footer from './Footer';
-import { AuthContext } from '../context/auth';
-import { useContext } from 'react';
-import { useState } from 'react';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
+import signUpImg from "../assets/landingPage/signup.png";
+import Footer from "./Footer";
+import { AuthContext } from "../context/auth";
+import { useContext } from "react";
+import { useState } from "react";
 function SignUp() {
   const authContext = useContext(AuthContext);
   const { register } = authContext;
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
+    name: "",
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -23,23 +23,22 @@ function SignUp() {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    setError('');
+    setError("");
   };
   const handleSubmit = async (e) => {
     // console.log(formData);
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
     // Validation
     if (!formData.name || !formData.email || !formData.password) {
-      setError('All fields are required');
+      setError("All fields are required");
       setLoading(false);
       return;
     }
 
-
     if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long');
+      setError("Password must be at least 6 characters long");
       setLoading(false);
       return;
     }
@@ -48,27 +47,31 @@ function SignUp() {
     setLoading(false);
 
     if (result.success) {
-      navigate('/dashboard');
+      navigate("/dashboard");
     } else {
       setError(result.message);
     }
   };
 
   return (
-    <div className="bg-green-50 lg:h-full max-md:h-full md:h-screen max-lg:h-full">
+    <div className="bg-green-50 lg:h-full max-md:h-screen  md:h-screen max-lg:h-full">
       <div>
         <Link to="/">
-          <img src={logo} alt="" className="w-[125px] cursor-pointer pl-2.5 " />
+          <img
+            src={logo}
+            alt=""
+            className="w-[125px] cursor-pointer pl-2.5 pb-2.5 pt-2.5"
+          />
         </Link>
       </div>
-      <div className="flex flex-row items-center justify-center max-md:flex max-md:flex-col-reverse max-lg:flex max-lg:flex-col-reverse lg:flex lg:flex-row">
-        <div className=" flex flex-col items-center justify-center m-auto gap-[10px]">
+      <div className="flex flex-row items-center justify-center max-md:flex  max-lg:flex lg:flex lg:flex-row">
+        <div className=" flex flex-col items-center justify-center m-auto gap-2.5">
           <h2 className="text-2xl text-[green] font-semibold">
             SignUp as User
           </h2>
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col gap-[15px]  pt-[40px] pl-[30px] pr-[30px] border-3 rounded-md border-green-100 hover:border-green-200 max-md:mt-[40px] max-md:mb-[40px] max-md:border-green-200 md:p-[15px]"
+            className="flex flex-col gap-[15px]  pt-10 pb-10 pl-[30px] pr-[30px] border-3 rounded-md border-green-100 hover:border-green-200 max-md:mt-10 max-md:mb-10 max-md:border-green-200 md:p-[15px]"
           >
             {error && <p className="text-red-500">{error}</p>}
 
@@ -85,7 +88,7 @@ function SignUp() {
                 onChange={handleChange}
                 value={formData.name}
                 placeholder="your name"
-                className="rounded-sm  pt-[4px] pb-[4px] pl-[3px] pr-[3px] w-[350px]  bg-white max-md:w-auto "
+                className="rounded-sm  pt-1 pb-1 pl-[3px] pr-[3px] w-[350px]  bg-white max-md:w-auto "
               />
             </div>
             <div>
@@ -101,7 +104,7 @@ function SignUp() {
                 required
                 onChange={handleChange}
                 value={formData.email}
-                className="rounded-sm  pt-[4px] pl-[3px] pr-[3px] w-[350px]  bg-white max-md:w-auto"
+                className="rounded-sm  pt-1 pl-[3px] pr-[3px] w-[350px]  bg-white max-md:w-auto"
               />
             </div>
             <div>
@@ -118,31 +121,30 @@ function SignUp() {
                 required
                 onChange={handleChange}
                 value={formData.password}
-                className="rounded-sm  pt-[4px] pb-[4px] pl-[3px] pr-[3px] w-[350px]  bg-white max-md:w-auto"
+                className="rounded-sm  pt-1 pb-1 pl-[3px] pr-[3px] w-[350px]  bg-white max-md:w-auto"
               />
             </div>
-            <div className=" flex flex-col items-center justify-center mt-[10px] ">
+            <div className=" flex flex-col items-center justify-center mt-2.5 ">
               <button
                 type="submit"
                 disabled={loading}
-                className=" rounded-2xl bg-black text-white pt-[5px] pb-[5px] pl-[20px] pr-[20px] w-[100px] mb-[15px]  hover:cursor-pointer "
+                className=" rounded-2xl bg-black text-white pt-[5px] pb-[5px] pl-5 pr-5 w-[100px] mb-[15px]  hover:cursor-pointer "
               >
                 SignUp
               </button>
               <p>
-                Already have Account? |{' '}
-                <Link to="/login" className="text-[green] font-semibold">
-                  LogIn
+                Already have Account? |{" "}
+                <Link to="/LogIn" className="text-[green] font-semibold">
+                  Log In
                 </Link>
               </p>
             </div>
           </form>
         </div>
         <div>
-          <img src={signUpImg} alt="" width={600} />
+          <img src={signUpImg} alt="" width={600} className="max-md:hidden " />
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
