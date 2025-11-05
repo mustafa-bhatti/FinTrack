@@ -42,7 +42,7 @@ export function TransactionList({ name = 'Transactions' }) {
               currency={user.currency}
             />
           );
-        } else if (name == 'Transactions') {
+        } else if (name == "Transactions") {
           return (
             <TransactionItem
               key={index}
@@ -54,7 +54,7 @@ export function TransactionList({ name = 'Transactions' }) {
               currency={user.currency}
             />
           );
-        } else if (name == 'Expense' && transaction.type == 'expense') {
+        } else if (name == "Expense" && transaction.type == "expense") {
           return (
             <TransactionItem
               key={index}
