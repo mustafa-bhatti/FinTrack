@@ -49,8 +49,8 @@ export default function TransactionItem({
       </div>
       <div className="text-[13px] lg:text-[14px]">
         <div>
-          <p className={`${type === 'income' ? 'text-green-500 bg-green-100 rounded-2xl p-1 text-center' : 'text-red-500 bg-red-100  rounded-2xl p-1 text-center'}`}>{currency==="USD" ? "$":""}{type === 'income' ? value : -value} {currency !== "USD" ? currency : ""}</p>
-          <p className='my-1'>{date}</p>
+          <p className={`${type === 'income' ? 'text-green-500 bg-green-100 rounded-2xl p-1 text-center' : 'text-red-500 bg-red-100  rounded-2xl p-1 text-center'}`}>{currency=="USD" ? "$":""}{type === 'income' ? value : -value} {currency !== "USD" ? currency : ""}</p>
+          <p className='my-1'>{new Date(date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</p>
         </div>
       </div>
     </div>

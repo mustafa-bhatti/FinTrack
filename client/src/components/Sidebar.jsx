@@ -28,7 +28,7 @@ export default function Sidebar({ showSidebar }) {
   const location = useLocation();
   const isActivePath = (currentPath) => {
     return location.pathname === currentPath;
-  }  
+  };
   return (
     <div
       className={`sidebar ${showSidebar ? 'sidebar-open' : 'sidebar-closed'}`}
@@ -40,18 +40,11 @@ export default function Sidebar({ showSidebar }) {
           return (
             <div
               key={index}
-              className={`sidebar-item ${
-                active ? 'active' : ''
-              } ${item.isLogout ? 'logout' : ''}`}
+              className={`sidebar-item ${active ? 'active' : ''} ${
+                item.isLogout ? 'logout' : ''
+              }`}
             >
-              <Link
-                key={index}
-                to={
-                  item.label !== 'Dashboard'
-                    ? '/dashboard/' + item.label.toLowerCase()
-                    : '/dashboard'
-                }
-              >
+              <Link key={index} to={item.path}>
                 <button name={item.label} aria-label={item.label}>
                   <IconComponent className="sidebar-icon" />
                 </button>
