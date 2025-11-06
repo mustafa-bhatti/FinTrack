@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { set, useForm } from 'react-hook-form';
+import { AuthContext } from '../context/auth';
 export default function AddExpense() {
   const {
     register,
@@ -7,11 +8,15 @@ export default function AddExpense() {
     setError,
     formState: { errors, isSubmitting },
   } = useForm();
+  const { addTransaction } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
-    console.log(data);
-  };
+    data.type = 'expense';
+    const response = await addTransaction(data);
+    console.log(response);
 
+    // Call the API to add the expense
+  };
   return (
     <div className="add-expense-dialog">
       <dialog closedby="any" className="expense-dialog min-w-[65%]">
@@ -19,7 +24,7 @@ export default function AddExpense() {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-3 p-4 "
         >
-          <h2 className="font-bold text-2xl border-b-1 border-gray-200 pb-2">
+          <h2 className="font-bold text-2xl border-b border-gray-200 pb-2">
             Add New Expense
           </h2>
           <p className="text-s">Expense Category</p>
@@ -65,7 +70,7 @@ export default function AddExpense() {
             {...register('source', { required: true })}
           >
             <option value="bank">Bank</option>
-            <option value="cash">Wallet</option>
+            <option value="wallet">Wallet</option>
           </select>
           <button
             type="submit"

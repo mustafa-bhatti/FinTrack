@@ -58,7 +58,7 @@ export default function AddIncome() {
             className="p-2 border border-gray-300 rounded bg-gray-200"
             {...register('date', { required: true })}
           />
-          <p className="text-s"> </p>
+          <p className="text-s"> Source</p>
           <select
             className="p-2 border border-gray-300 rounded bg-gray-200"
             {...register('source', { required: true })}

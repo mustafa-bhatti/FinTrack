@@ -114,6 +114,7 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Error adding transaction:', error);
+      return { success: false, message: 'Failed to add transaction' };
     }
   };
   const deleteTransaction = async (transactionId) => {
