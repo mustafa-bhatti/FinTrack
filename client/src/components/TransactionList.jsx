@@ -3,11 +3,10 @@ import TransactionItem from './transactionItem';
 import { DataContext } from '../context/data';
 import { AuthContext } from '../context/auth';
 import { useState } from 'react';
-import { useMemo } from 'react';
 import { useEffect } from 'react';
 
 export function TransactionList({ name = 'Transactions' }) {
-  const { getTransactions, loading } = useContext(AuthContext);
+  const { getTransactions, loading, user } = useContext(AuthContext);
   const [incomeData, setIncomeData] = useState([]);
 
   useEffect(() => {
@@ -16,10 +15,10 @@ export function TransactionList({ name = 'Transactions' }) {
       setIncomeData(incomeData);
       console.log(incomeData);
     };
+    
     getData();
   }, [loading]);
 
-  const { user } = useContext(DataContext);
   // const userTransactions = user.transactions.filter(
   //   (item) => item.type == name.toLowerCase()
   // );

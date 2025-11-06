@@ -87,7 +87,7 @@ export default function TransactionItem({
           </p>
         </div>
       </div>
-      <div className="text-[13px] lg:text-[14px] flex gap-4">
+      <div className="text-[13px] lg:text-[14px] flex flex-row-reverse gap-4">
         <button onClick={() => handleDelete(id)}>
           <img
             src={DeleteIcon}

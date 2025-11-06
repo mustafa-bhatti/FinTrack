@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { set, useForm } from 'react-hook-form';
 import { AuthContext } from '../context/auth';
 export default function AddIncome() {
@@ -9,13 +9,17 @@ export default function AddIncome() {
     setError,
     formState: { errors, isSubmitting },
   } = useForm();
-
+  const [message, setMessage] = useState({ text: '', type: '' });
   const onSubmit = async (data) => {
     data.type = 'income';
     const response = await addTransaction(data);
     console.log(response);
 
     // Call the API to add the income
+  };
+  const showMessage = (text, msgType) => {
+    setMessage({ text, type: msgType });
+    setTimeout(() => setMessage({ text: '', type: '' }), 3000);
   };
 
   return (

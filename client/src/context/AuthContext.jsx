@@ -94,15 +94,19 @@ export const AuthProvider = ({ children }) => {
         `${API_BASE_URL}/users/${user.id}/transactions`
       );
       if (response.status === 200) {
+        setLoading(false);
         return response.data.transactions;
       }
     } catch (error) {
       console.error('Error fetching transactions data:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const addTransaction = async (transactionData) => {
     try {
+      setLoading(true);
       transactionData.user_id = user.id;
       console.log(transactionData);
       const response = await axios.post(
@@ -115,10 +119,13 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error('Error adding transaction:', error);
       return { success: false, message: 'Failed to add transaction' };
+    } finally {
+      setLoading(false);
     }
   };
   const deleteTransaction = async (transactionId) => {
     try {
+      setLoading(true);
       const response = await axios.delete(
         `${API_BASE_URL}/users/transactions/delete/${transactionId}`
       );
@@ -127,6 +134,8 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Error deleting transaction:', error);
+    } finally { 
+      setLoading(false);
     }
   };
 
