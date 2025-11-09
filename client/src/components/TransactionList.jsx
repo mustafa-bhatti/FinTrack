@@ -5,7 +5,7 @@ import { AuthContext } from '../context/auth';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-export function TransactionList({ name = 'Transactions' }) {
+export function TransactionList({ name = 'Transactions', setEditData }) {
   const { getTransactions, loading, user } = useContext(AuthContext);
   const [incomeData, setIncomeData] = useState([]);
 
@@ -41,6 +41,7 @@ export function TransactionList({ name = 'Transactions' }) {
               date={transaction.date}
               type={transaction.type}
               currency={user.currency}
+              setEditData={setEditData}
             />
           );
         } else if (name == 'Transactions') {
@@ -54,6 +55,7 @@ export function TransactionList({ name = 'Transactions' }) {
               date={transaction.date}
               type={transaction.type}
               currency={user.currency}
+              setEditData={setEditData}
             />
           );
         } else if (name == 'Expense' && transaction.type == 'expense') {
@@ -67,6 +69,7 @@ export function TransactionList({ name = 'Transactions' }) {
               date={transaction.date}
               type={transaction.type}
               currency={user.currency}
+              setEditData={setEditData}
             />
           );
         }
