@@ -1,22 +1,85 @@
-import React, { useContext } from 'react';
+import React, { use, useContext, useEffect } from 'react';
 import { set, useForm } from 'react-hook-form';
 import { AuthContext } from '../context/auth';
-export default function AddExpense() {
+export default function AddExpense({ editData, setEditData }) {
+  const { addTransaction, updateTransaction } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
-    setError,
+    setValue,
+    reset,
     formState: { errors, isSubmitting },
-  } = useForm();
-  const { addTransaction } = useContext(AuthContext);
+  } = useForm({
+    defaultValues: {
+      category: 'eating',
+      amount: '',
+      date: new Date().toISOString().split('T')[0],
+      source: 'bank',
+    },
+  });
+  // Handle dialog close to reset editData
+  useEffect(() => {
+    const dialog = document.querySelector('.expense-dialog');
+    const handleClose = () => {
+      setEditData(null);
+    };
+    dialog.addEventListener('close', handleClose);
+    dialog.addEventListener('cancel', handleClose);
+    return () => {
+      dialog.removeEventListener('close', handleClose);
+      dialog.removeEventListener('cancel', handleClose);
+    };
+  }, [setEditData]);
 
+  // Form submission
   const onSubmit = async (data) => {
     data.type = 'expense';
-    const response = await addTransaction(data);
-    console.log(response);
+    if (editData) {
+      console.log('editing data');
+      data.id = editData.id;
+      const response = await updateTransaction(data);
+      if (response.success) {
+        console.log('Transaction updated successfully');
+      } else {
+        console.log('Error updating transaction');
+      }
+    } else {
+      const response = await addTransaction(data);
 
-    // Call the API to add the expense
+      if (response.success) {
+        console.log('Transaction added successfully');
+      } else {
+        console.log(response);
+        console.log('Error adding transaction');
+      }
+    }
+    // Reset form and close dialog
+    reset();
+    setEditData(null);
+
+    // console.log(response);
   };
+  // Populate form if editData changes
+  useEffect(() => {
+    if (editData?.type === 'expense') {
+      // Set form values for editing
+      reset({
+        category: editData.category,
+        amount: editData.amount,
+        date: new Date(editData.date).toISOString().split('T')[0],
+        source: editData.source,
+      });
+      const dialog = document.querySelector('.expense-dialog');
+      dialog.showModal();
+    } else if (!editData) {
+      reset({
+        category: 'eating',
+        amount: '',
+        date: new Date().toISOString().split('T')[0],
+        source: 'bank',
+      });
+    }
+  }, [editData, setValue, reset]);
   return (
     <div className="add-expense-dialog">
       <dialog closedby="any" className="expense-dialog min-w-[65%]">
@@ -25,24 +88,24 @@ export default function AddExpense() {
           className="flex flex-col gap-3 p-4 "
         >
           <h2 className="font-bold text-2xl border-b border-gray-200 pb-2">
-            Add New Expense
+            {editData?.type === "expense" ? 'Edit Expense' : 'Add Expense'}
           </h2>
-          <p className="text-s">Expense Category</p>
+          <p className="text-s">Expense Category</p>  
           <select
             className="p-2 border border-gray-300 rounded bg-gray-200"
             {...register('category')}
           >
-            <option value="Eating">Eating</option>
-            <option value="Shopping">Shopping</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Travel">Travel</option>
-            <option value="Groceries">Groceries</option>
-            <option value="Rent">Rent</option>
-            <option value="Health">Health</option>
-            <option value="Gift">Gift</option>
-            <option value="Fuel">Fuel</option>
-            <option value="Transport">Transport</option>
-            <option value="Other">Other</option>
+            <option value="eating">Eating</option>
+            <option value="shopping">Shopping</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="travel">Travel</option>
+            <option value="groceries">Groceries</option>
+            <option value="rent">Rent</option>
+            <option value="health">Health</option>
+            <option value="gift">Gift</option>
+            <option value="fuel">Fuel</option>
+            <option value="transport">Transport</option>
+            <option value="other">Other</option>
           </select>
           <p className="text-s">Amount</p>
           <input
