@@ -4,18 +4,20 @@ import { DataContext } from '../context/data';
 import { AuthContext } from '../context/auth';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export function TransactionList({ name = 'Transactions', setEditData }) {
   const { getTransactions, loading, user } = useContext(AuthContext);
   const [incomeData, setIncomeData] = useState([]);
-
+  const location = useLocation();
+  const isDashboard = location.pathname === '/dashboard';
   useEffect(() => {
     const getData = async () => {
       let incomeData = await getTransactions();
       setIncomeData(incomeData);
       console.log(incomeData);
     };
-    
+
     getData();
   }, [loading]);
 
@@ -29,6 +31,7 @@ export function TransactionList({ name = 'Transactions', setEditData }) {
       <h1 className="font-bold">{name}</h1>
       {incomeData?.map((transaction, index) => {
         // console.log(transaction._id);
+        if (index >= 7 && isDashboard) return;
         transaction.type = transaction.type.toLowerCase();
         if (name == 'Income' && transaction.type == 'income') {
           return (
