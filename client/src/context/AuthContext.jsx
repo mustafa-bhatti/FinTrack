@@ -134,7 +134,24 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Error deleting transaction:', error);
-    } finally { 
+    } finally {
+      setLoading(false);
+    }
+  };
+  const updateTransaction = async (transactionData) => {
+    try {
+      setLoading(true);
+      console.log("Updating transaction:", transactionData);
+      const response = await axios.put(
+        `${API_BASE_URL}/users/transactions/update/${transactionData.id}`,
+        transactionData
+      );
+      if (response.status === 200) {
+        return { message: response.data.message, success: true };
+      }
+    } catch (error) {
+      console.error('Error updating transaction:', error);
+    } finally {
       setLoading(false);
     }
   };
@@ -150,6 +167,7 @@ export const AuthProvider = ({ children }) => {
     getTransactions,
     addTransaction,
     deleteTransaction,
+    updateTransaction,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

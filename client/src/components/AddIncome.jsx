@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { set, useForm } from 'react-hook-form';
 import { AuthContext } from '../context/auth';
 export default function AddIncome({ editData, setEditData }) {
-  const { addTransaction } = useContext(AuthContext);
+  const { addTransaction, updateTransaction } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -36,6 +36,13 @@ export default function AddIncome({ editData, setEditData }) {
     data.type = 'income';
     if (editData) {
       console.log('editing data');
+      data.id = editData.id;
+      const response = await updateTransaction(data);
+      if (response.success) {
+        console.log('Transaction updated successfully');
+      } else {
+        console.log('Error updating transaction');
+      }
     } else {
       const response = await addTransaction(data);
       
