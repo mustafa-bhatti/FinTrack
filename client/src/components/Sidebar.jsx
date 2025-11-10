@@ -22,8 +22,8 @@ export default function Sidebar({ showSidebar }) {
     },
     {
       icon: MdAccountBalanceWallet,
-      label: "Wallet",
-      path: "/dashboard/wallet",
+      label: "Balance",
+      path: "/dashboard/balance",
     },
     { icon: MdBarChart, label: "Reports", path: "/dashboard/reports" },
     { icon: MdSettings, label: "Settings", path: "/dashboard/settings" },
