@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   // Refresh triggers to force component re-renders after data changes
   const [transactionRefresh, setTransactionRefresh] = useState(0);
   const [balanceRefresh, setBalanceRefresh] = useState(0);
+
   // Balance data to share across components
   const [balances, setBalances] = useState({ bank: 0, wallet: 0, total: 0 });
   // const [error, setError] = useState(null);
@@ -185,6 +186,7 @@ export const AuthProvider = ({ children }) => {
       );
       if (response.status === 200) {
         setBalanceLoading(false);
+        setBalanceRefresh((prev) => prev + 1);
         const balanceData = response.data.balances;
         // Update shared balance state
         setBalances({
