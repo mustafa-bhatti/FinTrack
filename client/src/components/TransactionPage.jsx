@@ -10,6 +10,7 @@ export default function TransactionPage() {
   const [showSidebar, setShowSidebar] = useState(() => {
     return window.innerWidth >= 1024;
   });
+  const [editData, setEditData] = useState(null);
 
   const showDialog = (name) => {
     let dialog = document.querySelector(`.${name}-dialog`);
@@ -21,8 +22,8 @@ export default function TransactionPage() {
       <div className="flex min-h-screen">
         <Sidebar showSidebar={showSidebar} />
         <div className="transaction-dashboard">
-          <AddIncome />
-          <AddExpense />
+          <AddIncome editData={editData} setEditData={setEditData} />
+          <AddExpense editData={editData} setEditData={setEditData} />
           <div className="t-buttons flex gap-15 justify-center">
             {/* buttons */}
             <button
@@ -40,8 +41,8 @@ export default function TransactionPage() {
             </button>
           </div>
           <div className="divider flex flex-col lg:flex-row gap-4 lg:flex-1">
-            <TransactionList name="Income" />
-            <TransactionList name="Expense" />
+            <TransactionList name="Income" setEditData={setEditData} />
+            <TransactionList name="Expense" setEditData={setEditData} />
           </div>
         </div>
       </div>

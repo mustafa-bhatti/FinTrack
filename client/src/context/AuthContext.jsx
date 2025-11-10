@@ -94,15 +94,19 @@ export const AuthProvider = ({ children }) => {
         `${API_BASE_URL}/users/${user.id}/transactions`
       );
       if (response.status === 200) {
+        setLoading(false);
         return response.data.transactions;
       }
     } catch (error) {
       console.error("Error fetching transactions data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const addTransaction = async (transactionData) => {
     try {
+      setLoading(true);
       transactionData.user_id = user.id;
       console.log(transactionData);
       const response = await axios.post(
@@ -113,6 +117,42 @@ export const AuthProvider = ({ children }) => {
         return response.data.message;
       }
     } catch (error) {
+      console.error('Error adding transaction:', error);
+      return { success: false, message: 'Failed to add transaction' };
+    } finally {
+      setLoading(false);
+    }
+  };
+  const deleteTransaction = async (transactionId) => {
+    try {
+      setLoading(true);
+      const response = await axios.delete(
+        `${API_BASE_URL}/users/transactions/delete/${transactionId}`
+      );
+      if (response.status === 200) {
+        return { message: response.data.message, success: true };
+      }
+    } catch (error) {
+      console.error('Error deleting transaction:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const updateTransaction = async (transactionData) => {
+    try {
+      setLoading(true);
+      console.log("Updating transaction:", transactionData);
+      const response = await axios.put(
+        `${API_BASE_URL}/users/transactions/update/${transactionData.id}`,
+        transactionData
+      );
+      if (response.status === 200) {
+        return { message: response.data.message, success: true };
+      }
+    } catch (error) {
+      console.error('Error updating transaction:', error);
+    } finally {
+      setLoading(false);
       console.error("Error adding transaction:", error);
     }
   };
@@ -139,6 +179,8 @@ export const AuthProvider = ({ children }) => {
     getTransactions,
     addTransaction,
     fetchBalances,
+    deleteTransaction,
+    updateTransaction,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
