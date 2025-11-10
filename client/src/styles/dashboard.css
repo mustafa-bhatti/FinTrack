@@ -1,5 +1,6 @@
 .dashboard,
-.transaction-dashboard {
+.transaction-dashboard,
+.balance-dashboard {
   display: flex;
   flex-direction: column;
   background-color: #f0fdf4;

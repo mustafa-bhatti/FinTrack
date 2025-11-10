@@ -8,6 +8,7 @@ import Login from "../components/Login";
 import TransactionPage from "../components/TransactionPage";
 import { AuthProvider } from "../context/AuthContext";
 import ProtectedRoute from "../components/ProtectedRoute";
+import Balance from "../components/Balance";
 function AppRouter() {
   return (
     <AuthProvider>
@@ -31,6 +32,14 @@ function AppRouter() {
               element={
                 <ProtectedRoute>
                   <TransactionPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/balance"
+              element={
+                <ProtectedRoute>
+                  <Balance />
                 </ProtectedRoute>
               }
             />

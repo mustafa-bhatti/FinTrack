@@ -1,0 +1,27 @@
+.balance-details {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+.total {
+  font-size: large;
+  color: blue;
+}
+.total-balance,
+.bank-balance,
+.wallet-balance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.wallet,
+.bank {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
