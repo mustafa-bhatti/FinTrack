@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
 
   // Balance data to share across components
   const [balances, setBalances] = useState({ bank: 0, wallet: 0, total: 0 });
+  const [summary, setSummary] = useState({ income: 0, expenses: 0 });
   // const [error, setError] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token') || null);
   const API_BASE_URL = 'http://localhost:5002/api/v1';
@@ -210,7 +211,18 @@ export const AuthProvider = ({ children }) => {
       );
       if (response.status === 200) {
         setReportLoading(false);
-        return response.data;
+
+        const processedData = {
+          incomeReport: response.data.incomeReport || {},
+          expenseReport: response.data.expenseReport || {},
+        };
+        setSummary({
+          income: Object.values(processedData.incomeReport)[0].total,
+          expenses: Object.values(processedData.expenseReport)[0].total,
+        });
+        setBalanceRefresh((prev) => prev + 1);
+
+        return { data: response.data, success: true };
       }
     } catch (err) {
       setReportLoading(false);
@@ -220,7 +232,7 @@ export const AuthProvider = ({ children }) => {
   };
   const value = {
     user,
-    authLoading,
+    authLoading, // Overall auth loading state
     transactionLoading,
     reportLoading,
     balanceLoading,
@@ -230,14 +242,15 @@ export const AuthProvider = ({ children }) => {
     register,
     login,
     logout,
-    token,
-    isAuthenticated: !!user,
+    token, // Auth token
+    isAuthenticated: !!user, // Boolean indicating auth status
     getTransactions,
     addTransaction,
     fetchBalances,
     deleteTransaction,
     updateTransaction,
     getIncomeExpenseReport,
+    summary, // Summary data
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

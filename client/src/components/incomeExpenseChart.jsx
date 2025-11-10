@@ -21,7 +21,9 @@ export default function IncomeExpenseChart() {
   useEffect(() => {
     const getData = async () => {
       const response = await getIncomeExpenseReport(10);
-      setReport(response);
+      if (response.success) {
+        setReport(response.data);
+      }
     };
     getData();
   }, [transactionRefresh]); // Re-run when transactions change
@@ -45,7 +47,6 @@ export default function IncomeExpenseChart() {
         ? (labels = Object.keys(incomeData))
         : (labels = Object.keys(expenseData));
     // extract values for each label, defaulting to 0 if not present
-    // ✅ Simple sort for M format
     labels.reverse();
 
     let incomeValues = labels.map((label) => incomeData[label]?.total || 0);

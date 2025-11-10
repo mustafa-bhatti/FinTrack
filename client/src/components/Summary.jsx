@@ -8,13 +8,15 @@ import React, { useContext, useEffect } from 'react';
 
 export default function Summary({ incomeThisMonth, expenseThisMonth }) {
   const { user } = useContext(DataContext);
-  const { balances, fetchBalances, currency, balanceRefresh } =
+  const { balances, fetchBalances, currency, balanceRefresh, summary } =
     useContext(AuthContext);
 
   // Fetch balances if they haven't been loaded yet
   useEffect(() => {
     const fetchData = async () => {
-      await fetchBalances();
+      if (!balances || balanceRefresh <= 0) {
+        await fetchBalances();
+      }
     };
     fetchData();
   }, [balanceRefresh]);
@@ -47,8 +49,10 @@ export default function Summary({ incomeThisMonth, expenseThisMonth }) {
             </div>
             <p>Income</p>
             <p className="text-green-900 font-bold">
-              {user.currency === 'USD' ? '$' : ''} {user.income}{' '}
-              {user.currency !== 'USD' ? user.currency : ''}
+              {Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: currency || 'USD',
+              }).format(summary?.income)}
             </p>
           </div>
         </div>
@@ -60,9 +64,10 @@ export default function Summary({ incomeThisMonth, expenseThisMonth }) {
             </div>
             <p>Expenses</p>
             <p className="text-red-700 font-bold">
-              {' '}
-              {user.currency === 'USD' ? '$' : ''} {user.expenses}{' '}
-              {user.currency !== 'USD' ? user.currency : ''}
+              {Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: currency || 'USD',
+              }).format(summary?.expenses)}
             </p>
           </div>
         </div>
