@@ -1,15 +1,15 @@
-import React, { useContext, useState, useEffect } from "react";
-import "../styles/balance.css";
-import NavbarDashboard from "./NavbarDashboard";
-import Sidebar from "./Sidebar";
-import "../styles/transactionPage.css";
-import { AuthContext } from "../context/auth";
-import { FaWallet } from "react-icons/fa";
-import { RiBankCardFill } from "react-icons/ri";
-import { RiMoneyDollarCircleFill } from "react-icons/ri";
+import React, { useContext, useState, useEffect } from 'react';
+import '../styles/balance.css';
+import NavbarDashboard from './NavbarDashboard';
+import Sidebar from './Sidebar';
+import '../styles/transactionPage.css';
+import { AuthContext } from '../context/auth';
+import { FaWallet } from 'react-icons/fa';
+import { RiBankCardFill } from 'react-icons/ri';
+import { RiMoneyDollarCircleFill } from 'react-icons/ri';
 
 export default function Balance() {
-  const { fetchBalances } = useContext(AuthContext);
+  const { fetchBalances, loading } = useContext(AuthContext);
   const [showSidebar, setShowSidebar] = useState(() => {
     return window.innerWidth >= 1024;
   });
@@ -24,7 +24,7 @@ export default function Balance() {
       console.log(incomeData);
     };
     getbalance();
-  }, []);
+  }, [loading, fetchBalances]);
 
   return (
     <div className="balance-page">
@@ -36,7 +36,7 @@ export default function Balance() {
             <div className="bank">
               <RiMoneyDollarCircleFill color="green" size={30} />
               <h1 className="total">Total Balance:</h1>
-            </div>{" "}
+            </div>{' '}
             <p>{bankBalance + walletBalance}</p>
           </div>
 
@@ -46,7 +46,7 @@ export default function Balance() {
                 <div className="bank">
                   <RiBankCardFill color="green" size={30} />
                   <h1>Bank balance:</h1>
-                </div>{" "}
+                </div>{' '}
                 <p>{bankBalance}</p>
               </div>
             </li>
@@ -55,7 +55,7 @@ export default function Balance() {
                 <div className="wallet">
                   <FaWallet color="black" size={30} />
                   <h1>Wallet balance: </h1>
-                </div>{" "}
+                </div>{' '}
                 <p>{walletBalance}</p>
               </div>
             </li>

@@ -1,27 +1,27 @@
-import React from "react";
-import axios from "axios";
-import { useState } from "react";
-import { useEffect } from "react";
-import { AuthContext } from "./auth";
+import React from 'react';
+import axios from 'axios';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { AuthContext } from './auth';
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(localStorage.getItem("user") || null);
+  const [user, setUser] = useState(localStorage.getItem('user') || null);
   const [loading, setLoading] = useState(true);
   // const [error, setError] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem("token") || null);
-  const API_BASE_URL = "http://localhost:5002/api/v1";
+  const [token, setToken] = useState(localStorage.getItem('token') || null);
+  const API_BASE_URL = 'http://localhost:5002/api/v1';
 
   useEffect(() => {
     if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } else {
-      delete axios.defaults.headers.common["Authorization"];
+      delete axios.defaults.headers.common['Authorization'];
     }
   }, [token]);
 
   useEffect(() => {
     const checkAuth = async () => {
-      const storedUser = localStorage.getItem("user");
+      const storedUser = localStorage.getItem('user');
       if (token) {
         try {
           const response = await axios.get(`${API_BASE_URL}/auth/verify`);
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
             logout();
           }
         } catch (error) {
-          console.error("Error verifying token:", error);
+          console.error('Error verifying token:', error);
           logout();
         }
       }
@@ -49,16 +49,16 @@ export const AuthProvider = ({ children }) => {
       );
       if (response.data.success) {
         const { token, user } = response.data;
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
         // add user to localstorage
 
         setToken(token);
         return { success: true, message: response.data.message };
       }
     } catch (error) {
-      console.error("Error registering user:", error);
-      return { success: false, message: "Registration failed" };
+      console.error('Error registering user:', error);
+      return { success: false, message: 'Registration failed' };
     }
   };
   const login = async (userData) => {
@@ -66,30 +66,31 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post(`${API_BASE_URL}/auth/login`, userData);
       if (response.data.success) {
         const { token, user } = response.data;
-        localStorage.setItem("token", token);
+        localStorage.setItem('token', token);
         setToken(token);
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(user));
         setUser(user);
         return { success: true, message: response.data.message };
       }
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || "Login Failed",
+        message: error.response?.data?.message || 'Login Failed',
       };
     }
   };
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setToken(null);
     setUser(null);
-    delete axios.defaults.headers.common["Authorization"];
+    delete axios.defaults.headers.common['Authorization'];
   };
   const getTransactions = async () => {
     try {
       // console.log('Fetching income data...');
       // console.log(user.id);
+      // setLoading(true);
       const response = await axios.get(
         `${API_BASE_URL}/users/${user.id}/transactions`
       );
@@ -98,7 +99,7 @@ export const AuthProvider = ({ children }) => {
         return response.data.transactions;
       }
     } catch (error) {
-      console.error("Error fetching transactions data:", error);
+      console.error('Error fetching transactions data:', error);
     } finally {
       setLoading(false);
     }
@@ -106,7 +107,7 @@ export const AuthProvider = ({ children }) => {
 
   const addTransaction = async (transactionData) => {
     try {
-      setLoading(true);
+      // setLoading(true);
       transactionData.user_id = user.id;
       console.log(transactionData);
       const response = await axios.post(
@@ -125,7 +126,7 @@ export const AuthProvider = ({ children }) => {
   };
   const deleteTransaction = async (transactionId) => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const response = await axios.delete(
         `${API_BASE_URL}/users/transactions/delete/${transactionId}`
       );
@@ -140,8 +141,8 @@ export const AuthProvider = ({ children }) => {
   };
   const updateTransaction = async (transactionData) => {
     try {
-      setLoading(true);
-      console.log("Updating transaction:", transactionData);
+      // setLoading(true);
+      console.log('Updating transaction:', transactionData);
       const response = await axios.put(
         `${API_BASE_URL}/users/transactions/update/${transactionData.id}`,
         transactionData
@@ -153,21 +154,38 @@ export const AuthProvider = ({ children }) => {
       console.error('Error updating transaction:', error);
     } finally {
       setLoading(false);
-      console.error("Error adding transaction:", error);
+      // console.error('Error adding transaction:', error);
     }
   };
 
   const fetchBalances = async () => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/users/${user.id}/balances`);
-      if (res.data.success) {
-        return res.data.balances;
+      // setLoading(true);
+      const response = await axios.get(`${API_BASE_URL}/users/${user.id}/balances`);
+      if (response.status === 200) {
+        return response.data.balances;
       }
     } catch (err) {
-      console.error("Error fetching balances:", err);
+      console.error('Error fetching balances:', err);
+    } finally {
+      setLoading(false);
     }
   };
-
+  const getIncomeExpenseReport = async (monthsNumber) => {
+    try {
+      // setLoading(true);
+      const response = await axios.get(
+        `${API_BASE_URL}/users/reports/transactions/${user.id}/${monthsNumber}`
+      );
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (err) {
+      console.error('Error fetching income expense report:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
   const value = {
     user,
     loading,
@@ -181,6 +199,7 @@ export const AuthProvider = ({ children }) => {
     fetchBalances,
     deleteTransaction,
     updateTransaction,
+    getIncomeExpenseReport,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

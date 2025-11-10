@@ -19,7 +19,7 @@ export function TransactionList({ name = 'Transactions', setEditData }) {
     };
 
     getData();
-  }, [loading]);
+  }, []);
 
   // const userTransactions = user.transactions.filter(
   //   (item) => item.type == name.toLowerCase()

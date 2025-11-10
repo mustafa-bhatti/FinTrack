@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { DataContext } from '../context/data';
 import {
   BarChart,
@@ -9,52 +9,82 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { AuthContext } from '../context/auth';
+
 export default function IncomeExpenseChart() {
   const { user } = useContext(DataContext);
+  const [report, setReport] = useState(null);
+  const { getIncomeExpenseReport, loading } = useContext(AuthContext);
 
-  let incomeExpenseData = user.incomeData.labels.map((label, index) => ({
-    month: label,
-    income: user.incomeData.data[index],
-    expense: user.expenseData.data[index],
-  }));
-  if (incomeExpenseData.length > 5) {
-    if (window.innerWidth <= 500) {
-      incomeExpenseData = incomeExpenseData.slice(-5);
-      console.log(incomeExpenseData);
-    } else {
-      incomeExpenseData = incomeExpenseData.slice(-7);
+  useEffect(() => {
+    const getData = async () => {
+      const response = await getIncomeExpenseReport(5);
+      setReport(response);
+    };
+    getData();
+  }, []);
+
+  if (report) {
+    let incomeData = report.incomeReport;
+    let expenseData = report.expenseReport;
+    let labels = [];
+    // extract the labels from the larger dataset
+    labels =
+      Object.keys(incomeData).length >= Object.keys(expenseData).length
+        ? (labels = Object.keys(incomeData))
+        : (labels = Object.keys(expenseData));
+    // extract values for each label, defaulting to 0 if not present
+    // ✅ Simple sort for M format
+    labels.reverse();
+
+    let incomeValues = labels.map((label) => incomeData[label]?.total || 0);
+    let expenseValues = labels.map((label) => expenseData[label]?.total || 0);
+    // combine the income and expense values into a single array of objects
+    let incomeExpenseData = labels.map((label, index) => ({
+      month: label,
+      income: incomeValues[index],
+      expense: expenseValues[index],
+    }));
+
+    if (incomeExpenseData.length > 5) {
+      if (window.innerWidth <= 500) {
+        incomeExpenseData = incomeExpenseData.slice(-5);
+        console.log(incomeExpenseData);
+      } else {
+        incomeExpenseData = incomeExpenseData.slice(-7);
+      }
     }
-  }
-  //   console.log(balanceData);
+    //   console.log(balanceData);
 
-  return (
-    <div className="chart-container">
-      <h3 className="mb-4">Income vs Expense</h3>
-      <ResponsiveContainer width="99%" height={400}>
-        <BarChart data={incomeExpenseData}>
-          <XAxis dataKey={'month'} />
-          <YAxis
-            tickFormatter={(value) =>
-              `${user.currency} ${value.toLocaleString()}`
-            }
-            fontSize={12}
-          />
-          <Tooltip />
-          <Legend />
-          <Bar
-            // type="monotone"
-            dataKey="income"
-            name="Income"
-            fill="rgba(34, 197, 94, 0.8)"
-          />
-          <Bar
-            // type="monotone"
-            dataKey="expense"
-            name="Expense"
-            fill="rgba(239, 68, 68, 0.8)"
-          />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-  );
+    return (
+      <div className="chart-container">
+        <h3 className="mb-4">Income vs Expense</h3>
+        <ResponsiveContainer width="99%" height={400}>
+          <BarChart data={incomeExpenseData}>
+            <XAxis dataKey={'month'} />
+            <YAxis
+              tickFormatter={(value) =>
+                `${user.currency} ${value.toLocaleString()}`
+              }
+              fontSize={12}
+            />
+            <Tooltip />
+            <Legend />
+            <Bar
+              // type="monotone"
+              dataKey="income"
+              name="Income"
+              fill="rgba(34, 197, 94, 0.8)"
+            />
+            <Bar
+              // type="monotone"
+              dataKey="expense"
+              name="Expense"
+              fill="rgba(239, 68, 68, 0.8)"
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    );
+  }
 }
