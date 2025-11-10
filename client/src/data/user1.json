@@ -28,7 +28,7 @@
     "data": [7000, 7600, 7200]
   },
   "expenseData": {
-    "labels": ["Aug", "Sept", "Oct"],
+    "labels": ["Aug", "Sept", "Dec"],
     "data": [3000, 2600, 5200]
   },
   "transactions": [
