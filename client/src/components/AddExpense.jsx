@@ -56,6 +56,8 @@ export default function AddExpense({ editData, setEditData }) {
     // Reset form and close dialog
     reset();
     setEditData(null);
+    const dialog = document.querySelector('.expense-dialog');
+    dialog.close();
 
     // console.log(response);
   };
@@ -88,9 +90,9 @@ export default function AddExpense({ editData, setEditData }) {
           className="flex flex-col gap-3 p-4 "
         >
           <h2 className="font-bold text-2xl border-b border-gray-200 pb-2">
-            {editData?.type === "expense" ? 'Edit Expense' : 'Add Expense'}
+            {editData?.type === 'expense' ? 'Edit Expense' : 'Add Expense'}
           </h2>
-          <p className="text-s">Expense Category</p>  
+          <p className="text-s">Expense Category</p>
           <select
             className="p-2 border border-gray-300 rounded bg-gray-200"
             {...register('category')}

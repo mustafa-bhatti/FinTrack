@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../context/auth';
 import { Navigate } from 'react-router-dom';
 export default function ProtectedRoute({ children }) {
-  const { isAuthenticated, loading } = useContext(AuthContext);
-  if (loading) {
+  const { isAuthenticated, authLoading } = useContext(AuthContext);
+  if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">

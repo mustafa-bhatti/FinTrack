@@ -3,10 +3,20 @@ import { GiReceiveMoney } from 'react-icons/gi';
 
 import { FaMoneyBillAlt } from 'react-icons/fa';
 import { DataContext } from '../context/data';
-import React, { useContext } from 'react';
+import { AuthContext } from '../context/auth';
+import React, { useContext, useEffect } from 'react';
 
-export default function Summary() {
+export default function Summary({ incomeThisMonth, expenseThisMonth }) {
   const { user } = useContext(DataContext);
+  const { balances, fetchBalances } = useContext(AuthContext);
+
+  // Fetch balances if they haven't been loaded yet
+  useEffect(() => {
+    if (balances.total === 0 && user?.id) {
+      fetchBalances();
+    }
+  }, [user?.id]);
+
   // let income = user.income;
   // let expenses = user.expenses;
   let balance = user.balance;
@@ -20,8 +30,7 @@ export default function Summary() {
             </div>
             <p>Current Balance</p>
             <p className="text-green-900 font-bold">
-              {' '}
-              {user.currency === 'USD' ? '$' : ''} {balance}{' '}
+              {user.currency === 'USD' ? '$' : ''} {balances.total}{' '}
               {user.currency !== 'USD' ? user.currency : ''}
             </p>
           </div>

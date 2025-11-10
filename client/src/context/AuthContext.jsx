@@ -3,10 +3,20 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { AuthContext } from './auth';
+import { set } from 'react-hook-form';
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(localStorage.getItem('user') || null);
-  const [loading, setLoading] = useState(true);
+  // Separate loading states for different operations
+  const [authLoading, setAuthLoading] = useState(true);
+  const [transactionLoading, setTransactionLoading] = useState(false);
+  const [reportLoading, setReportLoading] = useState(false);
+  const [balanceLoading, setBalanceLoading] = useState(false);
+  // Refresh triggers to force component re-renders after data changes
+  const [transactionRefresh, setTransactionRefresh] = useState(0);
+  const [balanceRefresh, setBalanceRefresh] = useState(0);
+  // Balance data to share across components
+  const [balances, setBalances] = useState({ bank: 0, wallet: 0, total: 0 });
   // const [error, setError] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token') || null);
   const API_BASE_URL = 'http://localhost:5002/api/v1';
@@ -36,7 +46,7 @@ export const AuthProvider = ({ children }) => {
           logout();
         }
       }
-      setLoading(false);
+      setAuthLoading(false);
     };
     checkAuth();
   }, [token]);
@@ -90,105 +100,131 @@ export const AuthProvider = ({ children }) => {
     try {
       // console.log('Fetching income data...');
       // console.log(user.id);
-      // setLoading(true);
+      setTransactionLoading(true);
       const response = await axios.get(
         `${API_BASE_URL}/users/${user.id}/transactions`
       );
       if (response.status === 200) {
-        setLoading(false);
+        setTransactionLoading(false);
         return response.data.transactions;
       }
     } catch (error) {
+      setTransactionLoading(false);
       console.error('Error fetching transactions data:', error);
-    } finally {
-      setLoading(false);
+      return { success: false, message: 'Failed to fetch transactions' };
     }
   };
 
   const addTransaction = async (transactionData) => {
     try {
-      // setLoading(true);
+      setTransactionLoading(true);
       transactionData.user_id = user.id;
-      console.log(transactionData);
       const response = await axios.post(
         `${API_BASE_URL}/users/transactions/add`,
         transactionData
       );
       if (response.status === 200) {
-        return response.data.message;
+        setTransactionLoading(false);
+        // Trigger refresh for components that display transactions and balances
+        setTransactionRefresh((prev) => prev + 1);
+        setBalanceRefresh((prev) => prev + 1);
+        return response.data;
       }
     } catch (error) {
+      setTransactionLoading(false);
       console.error('Error adding transaction:', error);
       return { success: false, message: 'Failed to add transaction' };
-    } finally {
-      setLoading(false);
     }
   };
   const deleteTransaction = async (transactionId) => {
     try {
-      // setLoading(true);
+      setTransactionLoading(true);
       const response = await axios.delete(
         `${API_BASE_URL}/users/transactions/delete/${transactionId}`
       );
       if (response.status === 200) {
+        setTransactionLoading(false);
+        // Trigger refresh for components that display transactions and balances
+        setTransactionRefresh((prev) => prev + 1);
+        setBalanceRefresh((prev) => prev + 1);
         return { message: response.data.message, success: true };
       }
     } catch (error) {
+      setTransactionLoading(false);
       console.error('Error deleting transaction:', error);
-    } finally {
-      setLoading(false);
+      return { success: false, message: 'Failed to delete transaction' };
     }
   };
   const updateTransaction = async (transactionData) => {
     try {
-      // setLoading(true);
+      setTransactionLoading(true);
       console.log('Updating transaction:', transactionData);
       const response = await axios.put(
         `${API_BASE_URL}/users/transactions/update/${transactionData.id}`,
         transactionData
       );
       if (response.status === 200) {
+        setTransactionLoading(false);
+        // Trigger refresh for components that display transactions and balances
+        setTransactionRefresh((prev) => prev + 1);
+        setBalanceRefresh((prev) => prev + 1);
         return { message: response.data.message, success: true };
       }
     } catch (error) {
+      setTransactionLoading(false);
       console.error('Error updating transaction:', error);
-    } finally {
-      setLoading(false);
-      // console.error('Error adding transaction:', error);
+      return { success: false, message: 'Failed to update transaction' };
     }
   };
 
   const fetchBalances = async () => {
     try {
-      // setLoading(true);
-      const response = await axios.get(`${API_BASE_URL}/users/${user.id}/balances`);
+      setBalanceLoading(true);
+      const response = await axios.get(
+        `${API_BASE_URL}/users/${user.id}/balances`
+      );
       if (response.status === 200) {
-        return response.data.balances;
+        setBalanceLoading(false);
+        const balanceData = response.data.balances;
+        // Update shared balance state
+        setBalances({
+          bank: balanceData.bank,
+          wallet: balanceData.wallet,
+          total: balanceData.bank + balanceData.wallet,
+        });
+        return balanceData;
       }
     } catch (err) {
+      setBalanceLoading(false);
       console.error('Error fetching balances:', err);
-    } finally {
-      setLoading(false);
+      return { success: false, message: 'Failed to fetch balances' };
     }
   };
   const getIncomeExpenseReport = async (monthsNumber) => {
     try {
-      // setLoading(true);
+      setReportLoading(true);
       const response = await axios.get(
         `${API_BASE_URL}/users/reports/transactions/${user.id}/${monthsNumber}`
       );
       if (response.status === 200) {
+        setReportLoading(false);
         return response.data;
       }
     } catch (err) {
+      setReportLoading(false);
       console.error('Error fetching income expense report:', err);
-    } finally {
-      setLoading(false);
+      return { success: false, message: 'Failed to fetch report' };
     }
   };
   const value = {
     user,
-    loading,
+    authLoading,
+    transactionLoading,
+    reportLoading,
+    balanceLoading,
+    transactionRefresh,
+    balanceRefresh,
+    balances, // Shared balance data
     register,
     login,
     logout,

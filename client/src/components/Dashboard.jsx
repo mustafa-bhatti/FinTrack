@@ -10,6 +10,8 @@ import IncomeExpenseChart from './incomeExpenseChart';
 
 function Dashboard() {
   const { user } = useContext(DataContext);
+  const [incomeThisMonth, setIncomeThisMonth] = useState(0);
+  const [expenseThisMonth, setExpenseThisMonth] = useState(0);
   const [showSidebar, setShowSidebar] = useState(() => {
     return window.innerWidth >= 1024;
   });

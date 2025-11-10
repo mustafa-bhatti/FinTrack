@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState, useEffect } from 'react';
 import '../styles/balance.css';
 import NavbarDashboard from './NavbarDashboard';
@@ -9,22 +10,18 @@ import { RiBankCardFill } from 'react-icons/ri';
 import { RiMoneyDollarCircleFill } from 'react-icons/ri';
 
 export default function Balance() {
-  const { fetchBalances, loading } = useContext(AuthContext);
+  const { fetchBalances, balanceLoading, balanceRefresh, balances } =
+    useContext(AuthContext);
   const [showSidebar, setShowSidebar] = useState(() => {
     return window.innerWidth >= 1024;
   });
-  const [bankBalance, setBankBalance] = useState(0);
-  const [walletBalance, setWalletBalance] = useState(0);
-  //   fetchBalances();
+
   useEffect(() => {
     const getbalance = async () => {
-      let incomeData = await fetchBalances();
-      setBankBalance(incomeData.bank);
-      setWalletBalance(incomeData.wallet);
-      console.log(incomeData);
+      await fetchBalances(); // This will update the shared balances state
     };
     getbalance();
-  }, [loading, fetchBalances]);
+  }, [balanceRefresh]); // Re-run when balances change
 
   return (
     <div className="balance-page">
@@ -37,7 +34,7 @@ export default function Balance() {
               <RiMoneyDollarCircleFill color="green" size={30} />
               <h1 className="total">Total Balance:</h1>
             </div>{' '}
-            <p>{bankBalance + walletBalance}</p>
+            <p>{balances.total}</p>
           </div>
 
           <ul className="balance-details">
@@ -47,7 +44,7 @@ export default function Balance() {
                   <RiBankCardFill color="green" size={30} />
                   <h1>Bank balance:</h1>
                 </div>{' '}
-                <p>{bankBalance}</p>
+                <p>{balances.bank}</p>
               </div>
             </li>
             <li>
@@ -56,7 +53,7 @@ export default function Balance() {
                   <FaWallet color="black" size={30} />
                   <h1>Wallet balance: </h1>
                 </div>{' '}
-                <p>{walletBalance}</p>
+                <p>{balances.wallet}</p>
               </div>
             </li>
           </ul>

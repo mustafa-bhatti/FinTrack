@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
 import { DataContext } from '../context/data';
 import {
@@ -14,15 +15,25 @@ import { AuthContext } from '../context/auth';
 export default function IncomeExpenseChart() {
   const { user } = useContext(DataContext);
   const [report, setReport] = useState(null);
-  const { getIncomeExpenseReport, loading } = useContext(AuthContext);
+  const { getIncomeExpenseReport, reportLoading, transactionRefresh } =
+    useContext(AuthContext);
 
   useEffect(() => {
     const getData = async () => {
-      const response = await getIncomeExpenseReport(5);
+      const response = await getIncomeExpenseReport(10);
       setReport(response);
     };
     getData();
-  }, []);
+  }, [transactionRefresh]); // Re-run when transactions change
+
+  if (reportLoading) {
+    return (
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto"></div>
+        <p className="text-center mt-2 text-gray-600">Loading chart...</p>
+      </div>
+    );
+  }
 
   if (report) {
     let incomeData = report.incomeReport;

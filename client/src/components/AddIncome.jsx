@@ -45,17 +45,17 @@ export default function AddIncome({ editData, setEditData }) {
       }
     } else {
       const response = await addTransaction(data);
-      
       if (response.success) {
-        console.log('Transaction added successfully');
+        console.log(response.message);
       } else {
-        console.log(response)
-        console.log('Error adding transaction');
+        console.log('Err: ', response.message);
       }
     }
     // Reset form and close dialog
     reset();
     setEditData(null);
+    const dialog = document.querySelector('.income-dialog');
+    dialog.close();
 
     // console.log(response);
   };
