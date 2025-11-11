@@ -209,7 +209,7 @@ export const AuthProvider = ({ children }) => {
         `${API_BASE_URL}/users/reports/transactions/${user.id}/${monthsNumber}`
       );
       if (response.status === 200) {
-        console.log('IncomeReport', response.data);
+        // console.log('IncomeReport', response.data);
         const processedData = {
           incomeReport:
             Object.values(response.data?.incomeReport)[0]?.total || 0,
@@ -240,12 +240,17 @@ export const AuthProvider = ({ children }) => {
         `${API_BASE_URL}/users/update/${user.id}`,
         settingsData
       );
-      console.log(settingsData);
+      // console.log(settingsData);
       if (response.status === 200) {
         setAuthLoading(false);
         // Update user data in context and localStorage if needed
-        if (settingsData.email || settingsData.currency) {
-          const updatedUser = { ...user, ...settingsData };
+        if (
+          response.data.user.email !== user?.email ||
+          response.data.user.currency !== user?.currency ||
+          response.data.user.name !== user?.name
+        ) {
+          let { email, currency, name } = response.data.user;
+          const updatedUser = { ...user, email, currency, name };
           setUser(updatedUser);
           localStorage.setItem('user', JSON.stringify(updatedUser));
         }

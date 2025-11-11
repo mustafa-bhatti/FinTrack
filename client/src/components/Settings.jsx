@@ -24,7 +24,7 @@ export default function Settings() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  // const [errorMessage, setErrorMessage] = useState('');
 
   const {
     register,
@@ -84,15 +84,12 @@ export default function Settings() {
 
       if (data.name && data.name !== user?.name) {
         updateData.name = data.name;
-      } else {
-        updateData.name = '';
-      }
+      } 
 
       if (data.email && data.email !== user?.email) {
         updateData.email = data.email;
-      } else {
-        updateData.email = '';
       }
+      
 
       if (data.password && data.currentPassword) {
         updateData.password = data.password;
@@ -105,8 +102,6 @@ export default function Settings() {
 
       if (data.currency && data.currency !== user?.currency) {
         updateData.currency = data.currency;
-      } else {
-        updateData.currency = user?.currency;
       }
 
       // Call API to update settings
@@ -116,22 +111,20 @@ export default function Settings() {
         setSubmitSuccess(true);
         // Clear password fields after successful update
         reset({
-          email: data.email,
-          currency: data.currency,
+          email: user?.email,
+          currency: user?.currency,
           password: '',
           confirmPassword: '',
         });
         setTimeout(() => setSubmitSuccess(false), 3000);
       }
-
     } catch (error) {
-
       console.error('Settings update error:', error);
     } finally {
       setIsSubmitting(false);
     }
   };
-  
+
   return (
     <>
       <div className="dashboard-container flex flex-col bg-gray-50 min-h-screen">

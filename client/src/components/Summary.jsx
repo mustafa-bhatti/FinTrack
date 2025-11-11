@@ -8,8 +8,14 @@ import React, { useContext, useEffect } from 'react';
 
 export default function Summary({ incomeThisMonth, expenseThisMonth }) {
   const { user } = useContext(DataContext);
-  const { balances, fetchBalances, currency, balanceRefresh, summary } =
-    useContext(AuthContext);
+  const {
+    balances,
+    fetchBalances,
+    currency,
+    balanceRefresh,
+    summary,
+    transactionRefresh,
+  } = useContext(AuthContext);
 
   // Fetch balances if they haven't been loaded yet
   useEffect(() => {
@@ -19,8 +25,7 @@ export default function Summary({ incomeThisMonth, expenseThisMonth }) {
       }
     };
     fetchData();
-  }, [balanceRefresh]);
-
+  }, [transactionRefresh]);
   return (
     <>
       <div className="summary-container">
