@@ -230,6 +230,37 @@ export const AuthProvider = ({ children }) => {
       return { success: false, message: 'Failed to fetch report' };
     }
   };
+
+  const updateUserSettings = async (settingsData) => {
+    try {
+      setAuthLoading(true);
+      const response = await axios.put(
+        `${API_BASE_URL}/users/${user.id}/settings`,
+        settingsData
+      );
+      if (response.status === 200) {
+        setAuthLoading(false);
+        // Update user data in context and localStorage if needed
+        if (settingsData.email || settingsData.currency) {
+          const updatedUser = { ...user, ...settingsData };
+          setUser(updatedUser);
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+        }
+        return {
+          success: true,
+          message: response.data.message || 'Settings updated successfully',
+        };
+      }
+    } catch (error) {
+      setAuthLoading(false);
+      console.error('Error updating user settings:', error);
+      return {
+        success: false,
+        message: error.response?.data?.message || 'Failed to update settings',
+      };
+    }
+  };
+
   const value = {
     user,
     authLoading, // Overall auth loading state
@@ -242,6 +273,7 @@ export const AuthProvider = ({ children }) => {
     register,
     login,
     logout,
+    updateUserSettings,
     token, // Auth token
     isAuthenticated: !!user, // Boolean indicating auth status
     getTransactions,
