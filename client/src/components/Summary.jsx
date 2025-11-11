@@ -7,21 +7,13 @@ import { AuthContext } from '../context/auth';
 import React, { useContext, useEffect } from 'react';
 
 export default function Summary({ incomeThisMonth, expenseThisMonth }) {
-  const {
-    balances,
-    fetchBalances,
-    balanceRefresh,
-    summary,
-    transactionRefresh,
-    user,
-  } = useContext(AuthContext);
+  const { balances, fetchBalances, summary, transactionRefresh, user } =
+    useContext(AuthContext);
   let currency = user?.currency;
   // Fetch balances if they haven't been loaded yet
   useEffect(() => {
     const fetchData = async () => {
-      if (!balances || balanceRefresh <= 0) {
-        await fetchBalances();
-      }
+      await fetchBalances();
     };
     fetchData();
   }, [transactionRefresh]);
