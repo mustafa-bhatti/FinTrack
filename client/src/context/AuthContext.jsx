@@ -187,7 +187,6 @@ export const AuthProvider = ({ children }) => {
       );
       if (response.status === 200) {
         setBalanceLoading(false);
-        setBalanceRefresh((prev) => prev + 1);
         const balanceData = response.data.balances;
         // Update shared balance state
         setBalances({
@@ -210,17 +209,20 @@ export const AuthProvider = ({ children }) => {
         `${API_BASE_URL}/users/reports/transactions/${user.id}/${monthsNumber}`
       );
       if (response.status === 200) {
-        setReportLoading(false);
-
+        console.log('IncomeReport', response.data);
         const processedData = {
-          incomeReport: response.data.incomeReport || {},
-          expenseReport: response.data.expenseReport || {},
+          incomeReport:
+            Object.values(response.data?.incomeReport)[0]?.total || 0,
+          expenseReport:
+            Object.values(response.data?.expenseReport)[0]?.total || 0,
         };
-        setSummary({
-          income: Object.values(processedData.incomeReport)[0].total,
-          expenses: Object.values(processedData.expenseReport)[0].total,
-        });
         setBalanceRefresh((prev) => prev + 1);
+        setSummary({
+          income: processedData.incomeReport,
+          expenses: processedData.expenseReport,
+        });
+        setReportLoading(false);
+        // setTransactionRefresh((prev) => prev + 1);
 
         return { data: response.data, success: true };
       }
@@ -235,9 +237,10 @@ export const AuthProvider = ({ children }) => {
     try {
       setAuthLoading(true);
       const response = await axios.put(
-        `${API_BASE_URL}/users/${user.id}/settings`,
+        `${API_BASE_URL}/users/update/${user.id}`,
         settingsData
       );
+      console.log(settingsData);
       if (response.status === 200) {
         setAuthLoading(false);
         // Update user data in context and localStorage if needed

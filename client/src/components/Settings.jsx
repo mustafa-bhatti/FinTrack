@@ -13,7 +13,7 @@ import {
   FaCheck,
   FaSpinner,
 } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md';
+import { MdEmail, MdPerson } from 'react-icons/md';
 
 export default function Settings() {
   const [showSidebar, setShowSidebar] = useState(() => {
@@ -24,6 +24,7 @@ export default function Settings() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const {
     register,
@@ -33,6 +34,7 @@ export default function Settings() {
     reset,
   } = useForm({
     defaultValues: {
+      name: user?.name || '',
       email: user?.email || '',
       currency: user?.currency || 'USD',
     },
@@ -80,6 +82,12 @@ export default function Settings() {
       // Prepare update data - only include changed fields
       const updateData = {};
 
+      if (data.name && data.name !== user?.name) {
+        updateData.name = data.name;
+      } else {
+        updateData.name = '';
+      }
+
       if (data.email && data.email !== user?.email) {
         updateData.email = data.email;
       } else {
@@ -113,16 +121,17 @@ export default function Settings() {
           password: '',
           confirmPassword: '',
         });
-
         setTimeout(() => setSubmitSuccess(false), 3000);
       }
+
     } catch (error) {
+
       console.error('Settings update error:', error);
     } finally {
       setIsSubmitting(false);
     }
   };
-
+  
   return (
     <>
       <div className="dashboard-container flex flex-col bg-gray-50 min-h-screen">
@@ -154,7 +163,56 @@ export default function Settings() {
 
               {/* Settings Form */}
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+                {/* Name Section */}
+
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-300 text-xs lg:text-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-blue-100 rounded-lg">
+                      <MdPerson className="text-blue-600 text-lg" />
+                    </div>
+                    <div>
+                      <h2 className="text-[1.2em] lg:text-lg font-semibold text-gray-900">
+                        Name
+                      </h2>
+                      <p className="text-gray-600 text-xs lg:text-base">
+                        Update your name
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-xs lg:text-sm font-medium text-gray-700 mb-2">
+                        Name
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="text"
+                          {...register('name', {
+                            required: 'Name is required',
+                            minLength: {
+                              value: 2,
+                              message:
+                                'Name must be at least 2 characters long',
+                            },
+                          })}
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg   transition-all duration-200 bg-gray-50 focus:bg-white"
+                          placeholder="Enter your name"
+                        />
+                        <MdPerson className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                      </div>
+
+                      {errors.name && (
+                        <p className="mt-1 text-sm text-red-600 animate-fadeIn">
+                          {errors.name.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
                 {/* Email Section */}
+
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-300 text-xs lg:text-lg">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="p-2 bg-blue-100 rounded-lg">
@@ -223,6 +281,7 @@ export default function Settings() {
                       <div className="relative">
                         <input
                           type="password"
+                          autoComplete="new-password"
                           {...register('currentPassword', {
                             minLength: {
                               value: 6,
