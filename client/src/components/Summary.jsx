@@ -2,7 +2,6 @@
 import { MdAttachMoney } from 'react-icons/md';
 import { GiReceiveMoney } from 'react-icons/gi';
 import { FaMoneyBillAlt } from 'react-icons/fa';
-import { DataContext } from '../context/data';
 import { AuthContext } from '../context/auth';
 import React, { useContext, useEffect } from 'react';
 
