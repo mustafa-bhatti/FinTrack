@@ -122,7 +122,7 @@ export const AuthProvider = ({ children }) => {
       setTransactionLoading(true);
       transactionData.user_id = user.id;
       const response = await axios.post(
-        `${API_BASE_URL}/users/transactions/add`,
+        `${API_BASE_URL}/users/${user.id}/transactions/add`,
         transactionData
       );
       if (response.status === 200) {
@@ -142,7 +142,7 @@ export const AuthProvider = ({ children }) => {
     try {
       setTransactionLoading(true);
       const response = await axios.delete(
-        `${API_BASE_URL}/users/transactions/delete/${transactionId}`
+        `${API_BASE_URL}/users/${user.id}/transactions/delete/${transactionId}`
       );
       if (response.status === 200) {
         setTransactionLoading(false);
@@ -162,7 +162,7 @@ export const AuthProvider = ({ children }) => {
       setTransactionLoading(true);
       console.log('Updating transaction:', transactionData);
       const response = await axios.put(
-        `${API_BASE_URL}/users/transactions/update/${transactionData.id}`,
+        `${API_BASE_URL}/users/${user.id}/transactions/update/${transactionData.id}`,
         transactionData
       );
       if (response.status === 200) {

@@ -6,7 +6,7 @@ import { DataContext } from '../context/data';
 import { AuthContext } from '../context/auth';
 import React, { useContext, useEffect } from 'react';
 
-export default function Summary({ incomeThisMonth, expenseThisMonth }) {
+export default function Summary() {
   const { balances, fetchBalances, summary, transactionRefresh, user } =
     useContext(AuthContext);
   let currency = user?.currency;
