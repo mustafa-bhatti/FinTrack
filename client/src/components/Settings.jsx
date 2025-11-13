@@ -20,7 +20,7 @@ export default function Settings() {
     return window.innerWidth >= 1024;
   });
 
-  const { updateUserSettings, user } = useContext(AuthContext);
+  const { updateUserSettings, user, resetData } = useContext(AuthContext);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -84,12 +84,11 @@ export default function Settings() {
 
       if (data.name && data.name !== user?.name) {
         updateData.name = data.name;
-      } 
+      }
 
       if (data.email && data.email !== user?.email) {
         updateData.email = data.email;
       }
-      
 
       if (data.password && data.currentPassword) {
         updateData.password = data.password;
@@ -407,7 +406,7 @@ export default function Settings() {
                 </div>
 
                 {/* Submit Button */}
-                <div className="flex justify-end pt-6">
+                <div className="flex justify-between pt-6 flex-col gap-4 md:flex-row items-center">
                   <button
                     type="submit"
                     disabled={isSubmitting}
@@ -424,6 +423,13 @@ export default function Settings() {
                         Update Settings
                       </>
                     )}
+                  </button>
+                  <button
+                    type="reset"
+                    onClick={() => resetData()}
+                    className="ml-4 px-14 py-3 bg-red-200 text-red-700 font-medium rounded-lg hover:bg-red-300 focus:ring-4 focus:ring-gray-200 transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+                  >
+                    Reset
                   </button>
                 </div>
               </form>

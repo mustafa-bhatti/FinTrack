@@ -268,6 +268,30 @@ export const AuthProvider = ({ children }) => {
       };
     }
   };
+  const resetData = async () => {
+    try {
+      setAuthLoading(true);
+      const response = await axios.get(
+        `${API_BASE_URL}/users/reset/${user.id}`
+      );
+      if (response.status === 200) {
+        setAuthLoading(false);
+        setTransactionRefresh((prev) => prev + 1);
+        setBalanceRefresh((prev) => prev + 1);
+        return {
+          success: true,
+          message: response.data.message || 'Data reset successfully',
+        };
+      }
+    } catch (error) {
+      setAuthLoading(false);
+      console.error('Error resetting data:', error);
+      return {
+        success: false,
+        message: error.response?.data?.message || 'Failed to reset data',
+      };
+    }
+  }
 
   const value = {
     user,
@@ -291,6 +315,7 @@ export const AuthProvider = ({ children }) => {
     updateTransaction,
     getIncomeExpenseReport,
     summary, // Summary data
+    resetData,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

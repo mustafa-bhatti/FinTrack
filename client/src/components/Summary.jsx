@@ -7,7 +7,7 @@ import React, { useContext, useEffect } from 'react';
 
 export default function Summary() {
   const { balances, fetchBalances, summary, transactionRefresh, user } =
-    useContext(AuthContext);
+    useContext(AuthContext);  
   let currency = user?.currency;
   // Fetch balances if they haven't been loaded yet
   useEffect(() => {
