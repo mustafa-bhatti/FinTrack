@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -11,9 +11,11 @@ export const AuthProvider = ({ children }) => {
   const [transactionLoading, setTransactionLoading] = useState(false);
   const [reportLoading, setReportLoading] = useState(false);
   const [balanceLoading, setBalanceLoading] = useState(false);
+  const [adminLoading, setAdminLoading] = useState(false);
   // Refresh triggers to force component re-renders after data changes
   const [transactionRefresh, setTransactionRefresh] = useState(0);
   const [balanceRefresh, setBalanceRefresh] = useState(0);
+  const [adminRefresh, setAdminRefresh] = useState(0);
 
   // Balance data to share across components
   const [balances, setBalances] = useState({ bank: 0, wallet: 0, total: 0 });
@@ -307,6 +309,76 @@ export const AuthProvider = ({ children }) => {
       };
     }
   };
+  const getAppStats = useCallback(async () => {
+    try {
+      setAdminLoading(true);
+      const response = await axios.get(`${API_BASE_URL}/admin/stats`);
+      if (response.status === 200) {
+        setAdminLoading(false);
+        return response.data;
+      }
+    } catch (error) {
+      setAdminLoading(false);
+      console.error('Error fetching app stats:', error);
+      return { success: false, message: 'Failed to fetch app stats' };
+    }
+  }, [API_BASE_URL]);
+  const fetchUsers = useCallback(async () => {
+    try {
+      setAdminLoading(true);
+      const response = await axios.get(`${API_BASE_URL}/admin/users`);
+      if (response.status === 200) {
+        setAdminLoading(false);
+        return response.data;
+      }
+    } catch (error) {
+      setAdminLoading(false);
+      console.error('Error fetching users:', error);
+      return [];
+    }
+  }, [API_BASE_URL]);
+
+  const deleteUserbyAdmin = async (userId) => {
+    try {
+      setAdminLoading(true);
+      const response = await axios.delete(
+        `${API_BASE_URL}/admin/users/${userId}`
+      );
+      if (response.status === 200) {
+        setAdminLoading(false);
+        setAdminRefresh((prev) => prev + 1);
+        return { success: true, message: 'User deleted successfully' };
+      }
+    } catch (error) {
+      setAdminLoading(false);
+      console.error('Error deleting user:', error);
+      return { success: false, message: 'Failed to delete user' };
+    }
+  };
+  const updateUserbyAdmin = async (userId, userData) => {
+    try {
+      setAdminLoading(true);
+      const response = await axios.put(
+        `${API_BASE_URL}/admin/users/${userId}/role`,
+        { isAdmin: userData }
+      );
+      if (response.status === 200) {
+        setAdminLoading(false);
+        setAdminRefresh((prev) => prev + 1);
+        return {
+          success: true,
+          message: response.data.message || 'User updated successfully',
+        };
+      }
+    } catch (error) {
+      setAdminLoading(false);
+      console.error('Error updating user:', error);
+      return {
+        success: false,
+        message: error.response?.data?.message || 'Failed to update user',
+      };
+    }
+  };
 
   const value = {
     user,
@@ -316,6 +388,7 @@ export const AuthProvider = ({ children }) => {
     balanceLoading,
     transactionRefresh,
     balanceRefresh,
+    adminRefresh,
     balances, // Shared balance data
     register,
     login,
@@ -333,6 +406,10 @@ export const AuthProvider = ({ children }) => {
     summary, // Summary data
     resetData,
     getBankBalanceReport,
+    getAppStats,
+    fetchUsers,
+    deleteUserbyAdmin,
+    updateUserbyAdmin,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
