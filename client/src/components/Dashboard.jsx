@@ -23,9 +23,9 @@ function Dashboard() {
             <Summary />
             <div className="divider flex flex-col flex-1 lg:flex-row gap-4">
               <TransactionList />
-              <BalanceChart />
+              <IncomeExpenseChart />
             </div>
-            <IncomeExpenseChart />
+            <BalanceChart />
           </div>
         </div>
       </div>
