@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { useState } from "react";
 function SignUp() {
   const authContext = useContext(AuthContext);
-  const { register } = authContext;
+  const { register, isAdmin } = authContext;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -47,7 +47,11 @@ function SignUp() {
     setLoading(false);
 
     if (result.success) {
-      navigate("/dashboard");
+      if (isAdmin) {
+        navigate("/dashboard/admin");
+      } else {
+        navigate("/dashboard");
+      }
     } else {
       setError(result.message);
     }

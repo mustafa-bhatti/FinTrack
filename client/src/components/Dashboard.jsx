@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import Summary from './Summary';
-import { DataContext } from '../context/data';
 import '../styles/dashboard.css';
 import { TransactionList } from './transactionList';
 import NavbarDashboard from './NavbarDashboard';
@@ -9,9 +8,6 @@ import BalanceChart from './BalanceChart';
 import IncomeExpenseChart from './incomeExpenseChart';
 
 function Dashboard() {
-  const { user } = useContext(DataContext);
-  const [incomeThisMonth, setIncomeThisMonth] = useState(0);
-  const [expenseThisMonth, setExpenseThisMonth] = useState(0);
   const [showSidebar, setShowSidebar] = useState(() => {
     return window.innerWidth >= 1024;
   });

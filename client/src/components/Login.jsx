@@ -1,17 +1,17 @@
-import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png";
-import loginImg from "../assets/landingPage/signup.png";
-import Footer from "./Footer";
-import { AuthContext } from "../context/auth";
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import logo from '../assets/logo.png';
+import loginImg from '../assets/landingPage/signup.png';
+import Footer from './Footer';
+import { AuthContext } from '../context/auth';
 function Login() {
   const authContext = useContext(AuthContext);
-  const { login } = authContext;
+  const { login, isAdmin } = authContext;
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -20,24 +20,24 @@ function Login() {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    setError("");
+    setError('');
   };
 
   const handleSubmit = async (e) => {
     // console.log(formData);
     e.preventDefault();
     setLoading(true);
-    setError("");
+    setError('');
 
     // Validation
     if (!formData.email || !formData.password) {
-      setError("All fields are required");
+      setError('All fields are required');
       setLoading(false);
       return;
     }
 
     if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters long");
+      setError('Password must be at least 6 characters long');
       setLoading(false);
       return;
     }
@@ -46,7 +46,11 @@ function Login() {
     setLoading(false);
 
     if (result.success) {
-      navigate("/dashboard");
+      if (isAdmin) {
+        navigate('/dashboard/admin');
+      } else {
+        navigate('/dashboard');
+      }
     } else {
       setError(result.message);
     }
@@ -115,10 +119,10 @@ function Login() {
                 disabled={loading}
                 className=" rounded-2xl bg-black text-white pt-[5px] pb-[5px] pl-[20px] pr-[20px]  mb-[15px] hover:cursor-pointer "
               >
-                {loading ? "Logging In..." : "LogIn"}
+                {loading ? 'Logging In...' : 'LogIn'}
               </button>
               <p>
-                Did not have Account? |{" "}
+                Did not have Account? |{' '}
                 <Link to="/signUp" className="text-[green] font-semibold">
                   Sign Up
                 </Link>

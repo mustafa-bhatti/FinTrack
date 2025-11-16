@@ -10,6 +10,7 @@ import { AuthProvider } from '../context/AuthContext';
 import ProtectedRoute from '../components/ProtectedRoute';
 import Balance from '../components/Balance';
 import Settings from '../components/Settings';
+import AdminProtectedRoute from '../components/AdminRoute';
 function AppRouter() {
   return (
     <AuthProvider>
@@ -70,6 +71,18 @@ function AppRouter() {
                     </h1>
                   </div>
                 </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/admin"
+              element={
+                <AdminProtectedRoute>
+                  <div className="min-h-screen flex items-center justify-center">
+                    <h1 className="text-3xl font-bold">
+                      Admin Page Coming Soon!
+                    </h1>
+                  </div>
+                </AdminProtectedRoute>
               }
             />
           </Routes>

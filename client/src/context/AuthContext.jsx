@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { AuthContext } from './auth';
-import { set } from 'react-hook-form';
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(localStorage.getItem('user') || null);
@@ -324,6 +323,7 @@ export const AuthProvider = ({ children }) => {
     updateUserSettings,
     token, // Auth token
     isAuthenticated: !!user, // Boolean indicating auth status
+    isAdmin: user?.isAdmin || false,
     getTransactions,
     addTransaction,
     fetchBalances,

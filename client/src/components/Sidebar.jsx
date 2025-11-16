@@ -1,41 +1,50 @@
-import React, { use, useContext, useState } from "react";
+import React, { use, useContext, useState } from 'react';
 import {
   MdDashboard,
   MdAccountBalanceWallet,
   MdBarChart,
   MdLogout,
   MdSettings,
-} from "react-icons/md";
-import { BiTransfer } from "react-icons/bi";
-import { Link, useLocation } from "react-router-dom";
-import { AuthContext } from "../context/auth";
+  MdAccountCircle,
+} from 'react-icons/md';
+import { BiTransfer } from 'react-icons/bi';
+import { Link, useLocation } from 'react-router-dom';
+import { AuthContext } from '../context/auth';
 
 export default function Sidebar({ showSidebar }) {
-  const { logout } = useContext(AuthContext);
+  const { logout, isAdmin } = useContext(AuthContext);
 
   const menuItems = [
-    { icon: MdDashboard, label: "Dashboard", path: "/dashboard" },
+    { icon: MdDashboard, label: 'Dashboard', path: '/dashboard' },
     {
       icon: BiTransfer,
-      label: "Transactions",
-      path: "/dashboard/transactions",
+      label: 'Transactions',
+      path: '/dashboard/transactions',
     },
     {
       icon: MdAccountBalanceWallet,
-      label: "Balance",
-      path: "/dashboard/balance",
+      label: 'Balance',
+      path: '/dashboard/balance',
     },
     // { icon: MdBarChart, label: "Reports", path: "/dashboard/reports" },
-    { icon: MdSettings, label: "Settings", path: "/dashboard/settings" },
-    { icon: MdLogout, label: "Log Out", path: "/LandingPage", isLogout: true },
+    { icon: MdSettings, label: 'Settings', path: '/dashboard/settings' },
+    { icon: MdLogout, label: 'Log Out', path: '/LandingPage', isLogout: true },
   ];
+  // add admin menu item at second last position
+  if (isAdmin) {
+    menuItems.splice(-1, 0, {
+      icon: MdAccountCircle,
+      label: 'Admin',
+      path: '/dashboard/admin',
+    });
+  }
   const location = useLocation();
   const isActivePath = (currentPath) => {
     return location.pathname === currentPath;
   };
   return (
     <div
-      className={`sidebar ${showSidebar ? "sidebar-open" : "sidebar-closed"}`}
+      className={`sidebar ${showSidebar ? 'sidebar-open' : 'sidebar-closed'}`}
     >
       <nav className="sidebar-nav">
         {menuItems.map((item, index) => {
@@ -44,17 +53,17 @@ export default function Sidebar({ showSidebar }) {
           return (
             <div
               key={index}
-              className={`sidebar-item ${active ? "active" : ""} ${
-                item.isLogout ? "logout" : ""
+              className={`sidebar-item ${active ? 'active' : ''} ${
+                item.isLogout ? 'logout' : ''
               }`}
             >
               <Link
+                className="flex"
                 key={index}
                 to={item.path}
                 onClick={
-                  item.label === "Log Out"
+                  item.label === 'Log Out'
                     ? () => {
-                        //
                         logout();
                       }
                     : undefined
@@ -63,7 +72,7 @@ export default function Sidebar({ showSidebar }) {
                 <button name={item.label} aria-label={item.label}>
                   <IconComponent className="sidebar-icon" />
                 </button>
-                <span className={`sidebar-label ${!showSidebar && "hidden"}`}>
+                <span className={`sidebar-label ${!showSidebar && 'hidden'}`}>
                   {item.label}
                 </span>
               </Link>
