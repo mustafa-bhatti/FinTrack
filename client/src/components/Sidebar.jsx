@@ -25,7 +25,7 @@ export default function Sidebar({ showSidebar }) {
       label: "Balance",
       path: "/dashboard/balance",
     },
-    { icon: MdBarChart, label: "Reports", path: "/dashboard/reports" },
+    // { icon: MdBarChart, label: "Reports", path: "/dashboard/reports" },
     { icon: MdSettings, label: "Settings", path: "/dashboard/settings" },
     { icon: MdLogout, label: "Log Out", path: "/LandingPage", isLogout: true },
   ];

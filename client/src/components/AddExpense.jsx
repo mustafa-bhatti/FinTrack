@@ -34,6 +34,18 @@ export default function AddExpense({ editData, setEditData }) {
   // Form submission
   const onSubmit = async (data) => {
     data.type = 'expense';
+    data.date = new Date(data.date).toISOString();
+    const currentTime = new Date();
+    // Combine selected date with current time
+    const selectedDate = new Date(data.date);
+    selectedDate.setHours(
+      currentTime.getHours(),
+      currentTime.getMinutes(),
+      currentTime.getSeconds(),
+      currentTime.getMilliseconds()
+    );
+    data.date = selectedDate.toISOString();
+    console.log(data);
     if (editData) {
       console.log('editing data');
       data.id = editData.id;

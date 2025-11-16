@@ -232,7 +232,22 @@ export const AuthProvider = ({ children }) => {
       return { success: false, message: 'Failed to fetch report' };
     }
   };
-
+  const getBankBalanceReport = async (numOfEntries = 8) => {
+    try {
+      setReportLoading(true);
+      const response = await axios.get(
+        `${API_BASE_URL}/users/reports/balances/${user.id}/${numOfEntries}`
+      );
+      if (response.status === 200) {
+        setReportLoading(false);
+        return { data: response.data, success: true };
+      }
+    } catch (err) {
+      setReportLoading(false);
+      console.error('Error fetching bank balance report:', err);
+      return { success: false, message: 'Failed to fetch report' };
+    }
+  };
   const updateUserSettings = async (settingsData) => {
     try {
       setAuthLoading(true);
@@ -268,6 +283,7 @@ export const AuthProvider = ({ children }) => {
       };
     }
   };
+
   const resetData = async () => {
     try {
       setAuthLoading(true);
@@ -291,7 +307,7 @@ export const AuthProvider = ({ children }) => {
         message: error.response?.data?.message || 'Failed to reset data',
       };
     }
-  }
+  };
 
   const value = {
     user,
@@ -316,6 +332,7 @@ export const AuthProvider = ({ children }) => {
     getIncomeExpenseReport,
     summary, // Summary data
     resetData,
+    getBankBalanceReport,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

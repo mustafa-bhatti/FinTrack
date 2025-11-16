@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { DataContext } from '../context/data';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   AreaChart,
   Area,
@@ -9,29 +8,42 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { AuthContext } from '../context/auth';
 export default function BalanceChart() {
-  const { user } = useContext(DataContext);
+  const { getBankBalanceReport, transactionRefresh, user } =
+    useContext(AuthContext);
+  const [balanceData, setBalanceData] = useState([]);
 
-  let balanceData = user.balanceData.labels.map((label, index) => ({
-    date: label,
-    balance: user.balanceData.datasets.data[index],
-  }));
-  if (balanceData.length > 5) {
-    if (window.innerWidth <= 500) {
-      balanceData = balanceData.slice(-5);
-      console.log(balanceData);
-    } else {
-      balanceData = balanceData.slice(-7);
-    }
-  }
-  //   console.log(balanceData);
+  useEffect(() => {
+    const fetchBalanceData = async () => {
+      let response = await getBankBalanceReport(8);
+
+      if (response.success) {
+        let tempBalanceData = response.data.date.map((date, index) => ({
+          date: date,
+          balance: response.data.balance[index] || 0,
+        }));
+        let finalData = tempBalanceData;
+        if (tempBalanceData.length > 5) {
+          if (window.innerWidth <= 500) {
+            finalData = tempBalanceData.slice(-5); // Last 5 points on mobile
+          } else {
+            finalData = tempBalanceData.slice(-7); // Last 7 points on desktop
+          }
+        }
+        setBalanceData(finalData);
+      }
+    };
+
+    fetchBalanceData();
+  }, [transactionRefresh]); // Re-run when balance data changes
 
   return (
     <div className="chart-container">
-      <h3 className="mb-4">{user.balanceData.datasets.label}</h3>
+      <h3 className="mb-4">Bank Balance</h3>
       <ResponsiveContainer width="100%" height={400}>
         <AreaChart data={balanceData}>
-          <XAxis dataKey={'date'} />
+          <XAxis dataKey={'date'} fontSize={10} />
           <YAxis
             tickFormatter={(value) =>
               `${user.currency} ${value.toLocaleString()}`
