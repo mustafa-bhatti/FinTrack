@@ -233,11 +233,14 @@ export const AuthProvider = ({ children }) => {
       return { success: false, message: 'Failed to fetch report' };
     }
   };
-  const getBankBalanceReport = async (numOfEntries = 8) => {
+  const getBankBalanceReport = async (
+    numOfEntries = 8,
+    balanceType = 'bank'
+  ) => {
     try {
       setReportLoading(true);
       const response = await axios.get(
-        `${API_BASE_URL}/users/reports/balances/${user.id}/${numOfEntries}`
+        `${API_BASE_URL}/users/reports/balances/${user.id}/${numOfEntries}/${balanceType}`
       );
       if (response.status === 200) {
         setReportLoading(false);
@@ -323,6 +326,7 @@ export const AuthProvider = ({ children }) => {
       return { success: false, message: 'Failed to fetch app stats' };
     }
   }, [API_BASE_URL]);
+
   const fetchUsers = useCallback(async () => {
     try {
       setAdminLoading(true);

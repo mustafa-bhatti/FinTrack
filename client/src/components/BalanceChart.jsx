@@ -9,14 +9,14 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { AuthContext } from '../context/auth';
-export default function BalanceChart() {
+export default function BalanceChart({ balanceType = 'bank' }) {
   const { getBankBalanceReport, transactionRefresh, user } =
     useContext(AuthContext);
   const [balanceData, setBalanceData] = useState([]);
 
   useEffect(() => {
     const fetchBalanceData = async () => {
-      let response = await getBankBalanceReport(8);
+      let response = await getBankBalanceReport(8, balanceType);
 
       if (response.success) {
         let tempBalanceData = response.data.date.map((date, index) => ({
@@ -40,7 +40,7 @@ export default function BalanceChart() {
 
   return (
     <div className="chart-container">
-      <h3 className="mb-4">Bank Balance</h3>
+      <h3 className="mb-4"> {balanceType.charAt(0).toUpperCase() + balanceType.slice(1)} Balance</h3>
       <ResponsiveContainer width="100%" height={400}>
         <AreaChart data={balanceData}>
           <XAxis dataKey={'date'} fontSize={10} />
