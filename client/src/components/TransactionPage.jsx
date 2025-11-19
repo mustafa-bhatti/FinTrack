@@ -6,6 +6,7 @@ import { TransactionList } from "./transactionList";
 import AddIncome from "./AddIncome";
 import "../styles/transactionPage.css";
 import AddExpense from "./AddExpense";
+import "../styles/animations.css";
 export default function TransactionPage() {
   const [showSidebar, setShowSidebar] = useState(() => {
     return window.innerWidth >= 1024;
@@ -21,7 +22,7 @@ export default function TransactionPage() {
       <NavbarDashboard toggleSidebar={() => setShowSidebar(!showSidebar)} />
       <div className="flex min-h-screen">
         <Sidebar showSidebar={showSidebar} />
-        <div className="transaction-dashboard">
+        <div className="transaction-dashboard animate-slideUp">
           <AddIncome editData={editData} setEditData={setEditData} />
           <AddExpense editData={editData} setEditData={setEditData} />
           <div className="t-buttons flex gap-15 justify-center">
@@ -40,7 +41,7 @@ export default function TransactionPage() {
               Add Expense
             </button>
           </div>
-          <div className="divider flex flex-col lg:flex-row gap-4 lg:flex-1">
+          <div className="divider flex flex-col lg:flex-row gap-4 lg:flex-1 animate-slideUp ">
             <TransactionList name="Income" setEditData={setEditData} />
             <TransactionList name="Expense" setEditData={setEditData} />
           </div>

@@ -7,6 +7,7 @@ import { FaWallet, FaChartLine, FaSpinner } from 'react-icons/fa';
 import { RiBankCardFill, RiMoneyDollarCircleFill } from 'react-icons/ri';
 import { MdAccountBalance, MdTrendingUp } from 'react-icons/md';
 import BalanceChart from './BalanceChart';
+import '../styles/animations.css';
 
 export default function Balance() {
   const { fetchBalances, balanceLoading, balanceRefresh, balances, user } =
@@ -28,7 +29,7 @@ export default function Balance() {
 
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen ">
       <NavbarDashboard toggleSidebar={() => setShowSidebar(!showSidebar)} />
 
       <div className="flex min-h-screen">
@@ -66,12 +67,6 @@ export default function Balance() {
                   <div className="bg-linear-to-r from-emerald-500 to-teal-600 rounded-2xl p-6 lg:p-8 text-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center space-x-3">
-                        <div className="p-3 bg-white bg-opacity-20 rounded-full">
-                          <RiMoneyDollarCircleFill
-                            size={24}
-                            className="text-white"
-                          />
-                        </div>
                         <h2 className="text-lg lg:text-xl font-semibold">
                           Total Balance
                         </h2>
@@ -274,39 +269,6 @@ export default function Balance() {
           </div>
         </div>
       </div>
-
-      {/* Custom Styles for Animations */}
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes slideUp {
-          from {
-            opacity: 0;
-            transform: translateY(40px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .animate-fadeIn {
-          animation: fadeIn 0.6s ease-out;
-        }
-
-        .animate-slideUp {
-          animation: slideUp 0.8s ease-out;
-        }
-      `}</style>
     </div>
   );
 }

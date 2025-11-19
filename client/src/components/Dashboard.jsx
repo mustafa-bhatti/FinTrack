@@ -19,7 +19,7 @@ function Dashboard() {
 
         <div className="flex min-h-screen">
           <Sidebar showSidebar={showSidebar} />
-          <div className="dashboard">
+          <div className="dashboard animate-slideUp">
             <Summary />
             <div className="divider flex flex-col flex-1 lg:flex-row gap-4">
               <TransactionList />
