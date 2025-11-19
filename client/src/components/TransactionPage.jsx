@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import "../styles/transactionPage.css";
-import NavbarDashboard from "./NavbarDashboard";
-import Sidebar from "./Sidebar";
-import { TransactionList } from "./transactionList";
-import AddIncome from "./AddIncome";
-import "../styles/transactionPage.css";
-import AddExpense from "./AddExpense";
-import "../styles/animations.css";
+import React, { useState } from 'react';
+import '../styles/transactionPage.css';
+import NavbarDashboard from './NavbarDashboard';
+import Sidebar from './Sidebar';
+import { TransactionList } from './TransactionList';
+import AddIncome from './AddIncome';
+import '../styles/transactionPage.css';
+import AddExpense from './AddExpense';
+import '../styles/animations.css';
 export default function TransactionPage() {
   const [showSidebar, setShowSidebar] = useState(() => {
     return window.innerWidth >= 1024;
@@ -28,14 +28,14 @@ export default function TransactionPage() {
           <div className="t-buttons flex gap-15 justify-center">
             {/* buttons */}
             <button
-              onClick={() => showDialog("income")}
+              onClick={() => showDialog('income')}
               className="bg-green-200 p-5 rounded-2xl text-green-900 font-bold uppercase hover:border hover:-translate-y-0.5 transition-all"
             >
               Add Income
             </button>
 
             <button
-              onClick={() => showDialog("expense")}
+              onClick={() => showDialog('expense')}
               className="bg-red-200 p-5 rounded-2xl text-red-950 font-bold uppercase hover:-translate-y-1 hover:border transition-all"
             >
               Add Expense

@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext } from 'react';
-import TransactionItem from './transactionItem';
-import { DataContext } from '../context/data';
+import TransactionItem from './TransactionItem';
 import { AuthContext } from '../context/auth';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -23,11 +22,6 @@ export function TransactionList({ name = 'Transactions', setEditData }) {
     getData();
   }, [transactionRefresh]); // Re-run when transactions change
 
-  // const userTransactions = user.transactions.filter(
-  //   (item) => item.type == name.toLowerCase()
-  // );
-  // console.log(userTransactions);
-  // TODO: Sort them by date ascending order
   return (
     <div className="flex flex-col gap-3 col-2 w-full p-2 flex-1">
       <h1 className="font-bold">{name}</h1>
@@ -71,7 +65,7 @@ export function TransactionList({ name = 'Transactions', setEditData }) {
                 type={transaction.type}
                 currency={user.currency}
                 setEditData={setEditData}
-              />  
+              />
             );
           } else if (name == 'Expense' && transaction.type == 'expense') {
             return (
@@ -84,12 +78,12 @@ export function TransactionList({ name = 'Transactions', setEditData }) {
                 date={transaction.date}
                 type={transaction.type}
                 currency={user.currency}
-                setEditData={setEditData} 
+                setEditData={setEditData}
               />
             );
           }
         })
-       )}
-    </div>  
-  );  
+      )}
+    </div>
+  );
 }
