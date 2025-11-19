@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Summary from './Summary';
 import '../styles/dashboard.css';
-import { TransactionList } from './transactionList';
+import { TransactionList } from './TransactionList';
 import NavbarDashboard from './NavbarDashboard';
 import Sidebar from './Sidebar';
 import BalanceChart from './BalanceChart';
