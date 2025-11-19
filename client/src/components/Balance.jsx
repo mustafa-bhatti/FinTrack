@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useContext, useState, useEffect } from 'react';
 import NavbarDashboard from './NavbarDashboard';
 import Sidebar from './Sidebar';

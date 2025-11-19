@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
   // const [error, setError] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token') || null);
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5002/api/v1';
-
+  
   useEffect(() => {
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
