@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext } from 'react';
-import TransactionItem from './TransactionItem';
 import { AuthContext } from '../context/auth';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import TransactionItem from './transactionItem';
 
 export function TransactionList({ name = 'Transactions', setEditData }) {
   const { getTransactions, user, transactionLoading, transactionRefresh } =

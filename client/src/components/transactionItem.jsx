@@ -16,7 +16,6 @@ import investment from '../assets/transactions/investment.svg';
 import deleteIcon from '../assets/transactions/delete.svg';
 import { AuthContext } from '../context/auth';
 import { CiMenuKebab } from 'react-icons/ci';
-import AddIncome from './AddIncome';
 // import all the icons from '../assets/transactions'
 
 export default function TransactionItem({
