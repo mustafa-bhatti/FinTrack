@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   const [summary, setSummary] = useState({ income: 0, expenses: 0 });
   // const [error, setError] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token') || null);
-  const API_BASE_URL = 'http://localhost:5002/api/v1';
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5002/api/v1';
 
   useEffect(() => {
     if (token) {
